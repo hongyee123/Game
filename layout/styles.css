@@ -1,0 +1,45 @@
+#product .col-md-3 .card {
+  max-width: 300px;
+}
+
+#product .col-md-3 .card img {
+  max-height: 150px;
+  min-height: 150px;
+}
+
+@media screen and (max-width: 991px) {
+  /* start of large tablet styles */
+}
+
+@media only screen and (max-width: 767px) {
+  /* start of medium tablet styles */
+}
+
+@media (max-width: 479px) {
+  /* start of normal phone styles */
+  #report main {
+    padding: 0px;
+    width: 78%;
+    margin-left: 65px !important;
+  }
+  #addProduct main {
+    padding: 0px;
+    width: 78%;
+    margin-left: 72px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  /* start of super small phone styles */
+  #report main {
+    padding: 0px;
+    width: 75%;
+    margin-left: 65px !important;
+  }
+  #addProduct main {
+    padding: 0px;
+    width: 75%;
+    margin-left: 65px !important;
+  }
+}
+/*# sourceMappingURL=styles.css.map */

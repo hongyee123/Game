@@ -1,0 +1,152 @@
+body {
+  font-family: "SF Pro Text","Myriad Set Pro","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif !important;
+}
+
+nav.k-top-nav {
+  height: 90px;
+  padding: 0;
+  position: fixed;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  top: 0;
+  right: 0;
+  margin: 0;
+}
+
+nav.k-side-nav {
+  z-index: 2;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+}
+
+nav.k-side-nav div.logo {
+  height: 90px;
+  width: 100%;
+  position: relative;
+}
+
+nav.k-side-nav div.logo h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+nav.k-side-nav div.logo h2 a {
+  color: #000000;
+}
+
+nav.k-side-nav div.logo h2 a:hover {
+  text-decoration: none;
+}
+
+nav.k-side-nav ul li a {
+  color: #353535;
+}
+
+nav.k-side-nav ul li a i {
+  padding: 7px;
+}
+
+nav.k-side-nav ul li a.active {
+  background: #1d1d1f;
+  color: white;
+  -webkit-box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.2);
+          box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.2);
+  border-radius: 8px;
+}
+
+nav.k-side-nav ul li a:not(.active):hover {
+  background-color: rgba(169, 169, 169, 0.1);
+  border-radius: 8px;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+
+nav.k-side-nav ul li a.active:hover {
+  background-color: #464646;
+  border-radius: 8px;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+
+nav.k-side-nav-r {
+  z-index: 1;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 90px;
+}
+
+div.k-nav-container {
+  width: 100%;
+  position: relative;
+}
+
+ul.k-nav {
+  position: absolute;
+  left: 50%;
+  width: 80%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+main {
+  margin-top: 90px;
+}
+
+main.full-screen {
+  height: calc(100vh - 90px);
+}
+
+@media screen and (max-width: 991px) {
+  /* start of large tablet styles */
+  .k-side-nav {
+    width: 30%;
+  }
+  main {
+    margin-left: 150px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  /* start of medium tablet styles */
+  .k-side-nav {
+    width: 30%;
+  }
+  main {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 479px) {
+  /* start of normal phone styles */
+  .k-side-nav {
+    width: 30%;
+  }
+  .nav-link {
+    padding-left: 10px;
+  }
+  main {
+    margin-left: 57px;
+  }
+}
+
+@media (max-width: 320px) {
+  /* start of super small phone styles */
+  .k-side-nav {
+    width: 30%;
+  }
+  .nav-link {
+    padding-left: 7px;
+  }
+  main {
+    margin-left: 55px;
+  }
+}
+/*# sourceMappingURL=navBar.css.map */
