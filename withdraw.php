@@ -52,21 +52,18 @@ if(isset($_SESSION['username'])){
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-5 py-3 m-auto">
-                            <button type="button" class="btn btn-primary font-weight-bold font-size-h3 col-12 amount rounded-pill btn_withdraw">Withdraw</button>
+                            <button type="button" class="btn btn-primary font-weight-bold font-size-h3 col-12 rounded-pill btn_withdraw">Withdraw</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-		
 	</main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function() {
-        console.log('ready')
-
         $(".amount").click(function() {
             var amount = $(this).attr('data-amount');
             $('#amount_withdraw').val(amount);
@@ -74,7 +71,6 @@ if(isset($_SESSION['username'])){
 
         $('.btn_withdraw').on('click', function() {
             var amount_withdraw = $('#amount_withdraw').val();
-            console.log(amount_withdraw);
             $.ajax({
                 url: 'process/withdraw_function.php',
                 type: 'POST',
@@ -83,27 +79,30 @@ if(isset($_SESSION['username'])){
                     amount_withdraw : amount_withdraw,
                 },
                 success: function(data) {
-                    swal({
-                        icon: "success",
-                        title: "Success",
-                        text: "Order Placed Successfully",
-                        timer: 2500,
-                        buttons: false,
-                    }).then(function(){
-                        // window.location.assign('latest_order.php');
-                    });
-                },
-                error: function(){
-                    swal({
-                        icon: "error",
-                        title: "An error occurred.",
-                        text: "Credits no enough - Please Top-up " ,
-                        timer: 2500,
-                        buttons: false,
-                });
+                    if(data.status == 0) {
+                        swal({
+                            icon: "success",
+                            title: "Success",
+                            text: data.msg,
+                            timer: 1100,
+                            buttons: false,
+                        }).then(function(){
+                        // window.location.assign('helper_register.php');
+                        });
+                    }
+                    if(data.status == 2) {
+                        swal({
+                            icon: "warning",
+                            title: "Withdraw Fail",
+                            text: data.msg,
+                            timer: 2500,
+                            buttons: false,
+                        }).then(function(){
+                        // window.location.assign('helper_register.php');
+                        });
+                    }
                 }
             });
-
         });
     })
 

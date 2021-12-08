@@ -44,7 +44,7 @@ require_once('../config/config.php');
 						$output['status'] = 0;
 					}else{
 						$output['status'] = 2;
-							$output['msg'] = 'Product do not exist';
+						$output['msg'] = 'Product do not exist';
 					}
 					mysqli_close($conn);
 					echo json_encode($output);
