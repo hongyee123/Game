@@ -21,7 +21,7 @@ require_once('../config/verify.php');
             </a>
         </div>
             <?php
-                $query = "SELECT DISTINCT ord_type FROM order_detail";
+                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_helper_id = '$username' AND ord_status = '1'";
                 $result = mysqli_query($conn, $query);
                 if($result) {
                     $num_row = mysqli_num_rows($result);
@@ -59,12 +59,7 @@ require_once('../config/verify.php');
                     $out_set = ($page_num * 5) - 5;
                 }
 
-                $query = "SELECT order_detail.id AS detail_id,
-                                order_detail.ord_type AS type,
-                                order_detail.ord_status AS status,
-                                order_detail.ord_quantity AS quantity,
-                                orders.ord_user_id AS user
-                                FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_helper_id = '$username'AND ord_status = '1'";
+                $query = "SELECT *FROM order_detail WHERE ord_helper_id = '$username' AND ord_status = '1'";
 
                 if(isset($_GET['type'])) {
                     $category = $_GET['type'];
@@ -82,15 +77,15 @@ require_once('../config/verify.php');
                             $row = mysqli_fetch_assoc($result);
                             ?>
             <tbody>
-                <tr id="order-<?= $row['detail_id'] ?>">
-                    <th scope="row"><?= $row['detail_id']?></th>
-                    <td><?= $row['type']?></td>
-                    <td><?= $row['user']?></td>
-                    <td><?= $row['quantity']?></td>
+                <tr id="order-<?= $row['id'] ?>">
+                    <th scope="row"><?= $row['id']?></th>
+                    <td><?= $row['ord_type']?></td>
+                    <td><?= $row['ord_user_id']?></td>
+                    <td><?= $row['ord_quantity']?></td>
                     <td>
-                        <a href="user_information.php?pid=<?= $row['user']; ?>"><button class="btn btn-primary">User Information </button></a>
-                        <input class="btn btn-success btn-comfirm" type="button" value="Comfirm" data-detail_id="<?= $row['detail_id'] ?>">
-                        <input class="btn btn-danger btn-cancel" type="button" value="Cancel" data-detail_id="<?= $row['detail_id'] ?>" data-user="<?= $row['user'] ?>">
+                        <a href="user_information.php?pid=<?= $row['ord_user_id']; ?>"><button class="btn btn-primary">User Information </button></a>
+                        <input class="btn btn-success btn-comfirm" type="button" value="Comfirm" data-detail_id="<?= $row['id'] ?>">
+                        <input class="btn btn-danger btn-cancel" type="button" value="Cancel" data-detail_id="<?= $row['id'] ?>" data-user="<?= $row['ord_user_id'] ?>">
                     </td>
                 </tr>
                     <?php
@@ -112,11 +107,15 @@ require_once('../config/verify.php');
 <script>
     $('.btn-comfirm').on('click', function() {
         var detail_id = $(this).data('detail_id');
+        var user = $(this).data('user');
+        var accept = "accept";
         $.ajax({
-            url: 'process/helper_accept_order_function.php',
+            url: 'process/order_functions.php',
             type: 'POST',
             data: {
                 detail_id : detail_id,
+                user : user,
+                accept : accept,
             },
             success: function(data) {
                 var order_card = $('#order-'+ detail_id).remove();
@@ -147,6 +146,7 @@ require_once('../config/verify.php');
     $('.btn-cancel').on('click', function() {
         var detail_id = $(this).data('detail_id');
         var user = $(this).data('user');
+        var cancel = "cancel";
         swal({
             icon: "warning",
             title: "Comfirm Detele",
@@ -158,11 +158,12 @@ require_once('../config/verify.php');
             if(confirmDelete){
                 //comfirmed delete
                 $.ajax({
-                    url: 'process/helper_cancel_order_function.php',
+                    url: 'process/order_functions.php',
                     type: 'POST',
                     data: {
                         detail_id : detail_id,
                         user : user,
+                        cancel : cancel,
                     },success: function(){
                         var order_card = $('#order-'+ detail_id).remove();
                         console.log(order_card);

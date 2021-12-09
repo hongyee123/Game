@@ -33,7 +33,7 @@ if(isset($_SESSION['username'])){
             </a>
         </div>
             <?php
-                $query = "SELECT DISTINCT ord_type FROM order_detail";
+                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_status='4' AND ord_user_id = '$username'";
                 $result = mysqli_query($conn, $query);
                 if($result) {
                     $num_row = mysqli_num_rows($result);
@@ -73,13 +73,7 @@ if(isset($_SESSION['username'])){
                         $out_set = ($page_num * 5) - 5;
                     }
 
-                    $query = "SELECT order_detail.id AS detail_id,
-                                    order_detail.ord_helper_id AS helper,
-                                    order_detail.ord_type AS type,
-                                    order_detail.ord_status AS status,
-                                    order_detail.ord_quantity AS quantity,
-                                    order_detail.ord_price AS price
-                                    FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_user_id = '$username' AND ord_status = '4'";
+                    $query = "SELECT * FROM order_detail WHERE ord_user_id = '$username' AND ord_status = '4'";
 
                     if(isset($_GET['type'])) {
                         $category = $_GET['type'];
@@ -95,15 +89,15 @@ if(isset($_SESSION['username'])){
                         if($num_row > 0) {
                             for($i = 0; $i < $num_row; $i++) {
                                 $row = mysqli_fetch_assoc($result);
-                                $id = $row['detail_id'];
+                                $id = $row['id'];
                                 ?>
                 <tbody>
                     <tr>
-                        <th scope="row"><?= $row['detail_id']?></th>
-                        <td><?= $row['type']?></td>
-                        <td><?= $row['helper']?></td>
-                        <td><?= $row['quantity']?></td>
-                        <td><?= $row['price']?></td>
+                        <th scope="row"><?= $row['id']?></th>
+                        <td><?= $row['ord_type']?></td>
+                        <td><?= $row['ord_helper_id']?></td>
+                        <td><?= $row['ord_quantity']?></td>
+                        <td><?= $row['ord_price']?></td>
                         <td>
                             <span class="label label-inline label-light-success font-weight-bold">
                                 Done

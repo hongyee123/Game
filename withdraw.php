@@ -87,7 +87,7 @@ if(isset($_SESSION['username'])){
                             timer: 1100,
                             buttons: false,
                         }).then(function(){
-                        // window.location.assign('helper_register.php');
+                        window.location.assign('withdraw.php');
                         });
                     }
                     if(data.status == 2) {
@@ -98,7 +98,7 @@ if(isset($_SESSION['username'])){
                             timer: 2500,
                             buttons: false,
                         }).then(function(){
-                        // window.location.assign('helper_register.php');
+                        window.location.assign('withdraw.php');
                         });
                     }
                 }

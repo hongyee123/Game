@@ -2,7 +2,6 @@
 require_once('config/config.php');
 require_once('config/bootstrap.php');
 require_once('layouts.php');
-echo $bootstrapCSS; echo $jQueryJS;echo $jQueryFormJS;echo $sweetAlert; echo $bootstrapJS; echo $fontAwsomeIcons;
 
 $pageTitle = 'orders';
 $pageName = 'latest_order';
@@ -35,7 +34,7 @@ if(isset($_SESSION['username'])){
             </a>
         </div>
             <?php
-                $query = "SELECT DISTINCT ord_type FROM order_detail";
+                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_user_id = '$username'";
                 $result = mysqli_query($conn, $query);
                 if($result) {
                     $num_row = mysqli_num_rows($result);
@@ -53,7 +52,7 @@ if(isset($_SESSION['username'])){
             }
         }
     ?>
-z
+
     <div class="row col-12 mt-5">
             <table class="table table-light rounded">
                 <thead class="thead-dark">
@@ -74,13 +73,7 @@ z
                         $out_set = ($page_num * 5) - 5;
                     }
 
-                    $query = "SELECT order_detail.id AS detail_id,
-                                    order_detail.ord_helper_id AS helper,
-                                    order_detail.ord_type AS type,
-                                    order_detail.ord_status AS status,
-                                    order_detail.ord_quantity AS quantity,
-                                    order_detail.ord_price AS price
-                                    FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_user_id = '$username'";
+                    $query = "SELECT * FROM order_detail WHERE ord_user_id= '$username'";
 
                     if(isset($_GET['type'])) {
                         $category = $_GET['type'];
@@ -99,38 +92,38 @@ z
                                 ?>
                 <tbody>
                     <tr>
-                        <th scope="row"><?= $row['detail_id']?></th>
-                        <td><?= $row['type']?></td>
-                        <td><?= $row['helper']?></td>
-                        <td><?= $row['quantity']?></td>
-                        <td><?= $row['price']?></td>
+                        <th scope="row"><?= $row['id']?></th>
+                        <td><?= $row['ord_type']?></td>
+                        <td><?= $row['ord_helper_id']?></td>
+                        <td><?= $row['ord_quantity']?></td>
+                        <td><?= $row['ord_price']?></td>
                         <td>
                         <?php
-                        if($row['status'] == 1){
+                        if($row['ord_status'] == 1){
                             ?>
                                 <span class="label label-inline label-light-primary font-weight-bold">
                                     Pending
                                 </span>
                             <?php
-                        }elseif($row['status'] == 2){
+                        }elseif($row['ord_status'] == 2){
                             ?>
                                 <span class="label label-inline label-light-warning font-weight-bold">
                                     ING
                                 </span>
                             <?php
-                        }elseif($row['status'] == 3){
+                        }elseif($row['ord_status'] == 3){
                             ?>
                                 <span class="label label-inline label-light-dark font-weight-bold">
                                     Helper done this order
                                 </span>
                             <?php
-                        }elseif($row['status'] == 4){
+                        }elseif($row['ord_status'] == 4){
                             ?>
                                 <span class="label label-inline label-light-success font-weight-bold">
                                     Done
                                 </span>
                             <?php
-                        }elseif($row['status'] == 5){
+                        }elseif($row['ord_status'] == 5){
                             ?>
                                 <span class="label label-inline label-light-danger font-weight-bold">
                                     Cancelled

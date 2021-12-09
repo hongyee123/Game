@@ -22,7 +22,7 @@ require_once('../config/verify.php');
             </a>
         </div>
             <?php
-                $query = "SELECT DISTINCT ord_type FROM order_detail";
+                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_user_id = '$username'";
                 $result = mysqli_query($conn, $query);
                 if($result) {
                     $num_row = mysqli_num_rows($result);
@@ -60,12 +60,7 @@ require_once('../config/verify.php');
                     $out_set = ($page_num * 5) - 5;
                 }
 
-                $query = "SELECT order_detail.id AS detail_id,
-                                order_detail.ord_type AS type,
-                                order_detail.ord_status AS status,
-                                order_detail.ord_quantity AS quantity,
-                                orders.ord_user_id AS user
-                                FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_helper_id = '$username'";
+                $query = "SELECT * FROM order_detail WHERE ord_user_id = '$username'";
 
                 if(isset($_GET['type'])) {
                     $category = $_GET['type'];
@@ -83,38 +78,38 @@ require_once('../config/verify.php');
                             $row = mysqli_fetch_assoc($result);
                             ?>
             <tbody>
-                <tr id="order-<?= $row['detail_id'] ?>">
-                    <th scope="row"><?= $row['detail_id']?></th>
-                    <td><?= $row['type']?></td>
-                    <td><?= $row['user']?></td>
-                    <td><?= $row['quantity']?></td>
+                <tr id="order-<?= $row['id'] ?>">
+                    <th scope="row"><?= $row['id']?></th>
+                    <td><?= $row['ord_type']?></td>
+                    <td><?= $row['ord_user_id']?></td>
+                    <td><?= $row['ord_quantity']?></td>
                     <td>
                     <?php
-                        if($row['status'] == 1){
+                        if($row['ord_status'] == 1){
                             ?>
                                 <span class="label label-inline label-light-primary font-weight-bold">
                                     Haven't accept
                                 </span>
                             <?php
-                        }elseif($row['status'] == 2){
+                        }elseif($row['ord_status'] == 2){
                             ?>
                                 <span class="label label-inline label-light-warning font-weight-bold">
                                     ING
                                 </span>
                             <?php
-                        }elseif($row['status'] == 3){
+                        }elseif($row['ord_status'] == 3){
                             ?>
                                 <span class="label label-inline label-light-dark font-weight-bold">
                                     Waiting for user to comfirm
                                 </span>
                             <?php
-                        }elseif($row['status'] == 4){
+                        }elseif($row['ord_status'] == 4){
                             ?>
                                 <span class="label label-inline label-light-success font-weight-bold">
                                     Done
                                 </span>
                             <?php
-                        }elseif($row['status'] == 5){
+                        }elseif($row['ord_status'] == 5){
                             ?>
                                 <span class="label label-inline label-light-danger font-weight-bold">
                                     Cancelled
@@ -144,41 +139,3 @@ require_once('../config/verify.php');
         </table>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-    $('#btn-done').on('click', function() {
-        var detail_id = $(this).data('detail_id');
-        var user_id = $(this).data('user_id');
-        swal({
-            icon: "warning",
-            title: "Comfirm Done Order",
-            text: "Are you sure you had done this order?",
-            buttons: true,
-            dangerMode: false,
-            dangerModeText: 'YES',
-        })
-        .then((confirmDelete) => {
-            if(confirmDelete){
-                $.ajax({
-                    url: 'process/helper_done_order_function.php',
-                    type: 'POST',
-                    data: {
-                        detail_id : detail_id,
-                        user_id : user_id,
-                    },success: function(){
-                        var order_card = $('#order-'+ detail_id).remove();
-                        console.log(order_card);
-                        swal("Order Done!", {
-                            icon: "success",
-                        }).then(function(){
-                            $(".container-fluid").load(document.URL + " .container-fluid");
-                        });
-                    }
-                });
-            }else{
-                // cancel
-            }
-        });
-    });
-    </script>

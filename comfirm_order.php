@@ -34,9 +34,7 @@ if(isset($_SESSION['username'])){
             </a>
         </div>
             <?php
-                $query ="SELECT DISTINCT order_detail.ord_type
-                        FROM order_detail
-                        LEFT JOIN orders ON order_detail.id = orders.id WHERE ord_status='3' AND ord_user_id = '$username'";
+                $query ="SELECT DISTINCT ord_type FROM order_detail WHERE ord_status='3' AND ord_user_id = '$username'";
 
 
                 $result = mysqli_query($conn, $query);
@@ -77,13 +75,7 @@ if(isset($_SESSION['username'])){
                         $out_set = ($page_num * 5) - 5;
                     }
 
-                    $query = "SELECT order_detail.id AS detail_id,
-                                    order_detail.ord_helper_id AS helper,
-                                    order_detail.ord_type AS type,
-                                    order_detail.ord_status AS status,
-                                    order_detail.ord_quantity AS quantity,
-                                    order_detail.ord_price AS price
-                                    FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_user_id = '$username' AND ord_status = '3'";
+                    $query = "SELECT * FROM order_detail WHERE ord_user_id = '$username' AND ord_status = '3'";
 
                     if(isset($_GET['type'])) {
                         $category = $_GET['type'];
@@ -101,15 +93,15 @@ if(isset($_SESSION['username'])){
                                 $row = mysqli_fetch_assoc($result);
                                 ?>
                 <tbody>
-                    <tr id="order-<?= $row['detail_id'] ?>">
-                        <th scope="row"><?= $row['detail_id']?></th>
-                        <td><?= $row['type']?></td>
-                        <td><?= $row['helper']?></td>
-                        <td style="text-align: center"><?= $row['quantity']?></td>
-                        <td style="text-align: center"><?= $row['price']?></td>
+                    <tr id="order-<?= $row['id'] ?>">
+                        <th scope="row"><?= $row['id']?></th>
+                        <td><?= $row['ord_type']?></td>
+                        <td><?= $row['ord_helper_id']?></td>
+                        <td style="text-align: center"><?= $row['ord_quantity']?></td>
+                        <td style="text-align: center"><?= $row['ord_price']?></td>
                         <td style="text-align: center">
-                        <input class="btn btn-success btn-comfirm" type="button" value="Comfirm" data-detail_id="<?= $row['detail_id'] ?>" data-helper="<?= $row['helper'] ?>">
-                        <a class="btn btn-danger text-light" href="user_make_report.php?pid=<?= $row['detail_id'] ?>">Report</a>
+                        <input class="btn btn-success btn-comfirm" type="button" value="Comfirm" data-detail_id="<?= $row['id'] ?>" data-helper="<?= $row['ord_helper_id'] ?>">
+                        <a class="btn btn-danger text-light" href="user_make_report.php?pid=<?= $row['id'] ?>">Report</a>
                         </td>
                     </tr>
                 <?php
@@ -133,6 +125,7 @@ if(isset($_SESSION['username'])){
     $('.btn-comfirm').on('click', function() {
         var detail_id = $(this).data('detail_id');
         var helper = $(this).data('helper');
+        var comfirm = "comfirm";
         swal({
             icon: "warning",
             title: "Comfirm Done",
@@ -144,11 +137,12 @@ if(isset($_SESSION['username'])){
             if(confirm){
                 //comfirmed delete
                 $.ajax({
-                    url: 'process/comfirm_order_function.php',
+                    url: 'process/order_functions.php',
                     type: 'POST',
                     data: {
                         detail_id : detail_id,
                         helper : helper,
+                        comfirm : comfirm,
                     },success: function(){
                         var order_card = $('#order-'+ detail_id).remove();
                         console.log(order_card);

@@ -132,25 +132,26 @@ if($result) {
                     'ord_discount' : discount_total,
                 },
                 success: function(data) {
-                    swal({
-                        icon: "success",
-                        title: "Success",
-                        text: "Order Placed Successfully",
-                        timer: 2500,
-                        buttons: false,
-                    }).then(function(){
+                    if(data.status == 0) {
+                        swal({
+                            icon: "success",
+                            title: "Success",
+                            text: data.msg,
+                            timer: 2500,
+                            buttons: false,
+                        }).then(function(){
                         window.location.assign('latest_order.php');
-                    });
+                        });
+                    }if(data.status == 2) {
+                        swal({
+                            icon: "error",
+                            title: "Fail",
+                            text: data.msg,
+                            timer: 2500,
+                            buttons: false,
+                        })
+                    }
                 },
-                error: function(){
-                    swal({
-                        icon: "error",
-                        title: "An error occurred.",
-                        text: "Credits no enough - Please Top-up " ,
-                        timer: 2500,
-                        buttons: false,
-                });
-                }
             });
 
         });

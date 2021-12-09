@@ -53,7 +53,7 @@ if(isset($_SESSION['username'])){
   justify-content: center;
   flex-direction: column;
   display: grid;
-  height: 100%;
+  height: 50%;
   place-items: center;
   text-align: center;
   background: #000;

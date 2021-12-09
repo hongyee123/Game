@@ -10,7 +10,10 @@ require_once('../config/config.php');
     $username = $_POST['username'];
     $ord_discount = $_POST['ord_discount'];
 
-        $order_id = mysqli_insert_id($conn);
+    $sql = "SELECT id FROM order_detail";
+    $check_row = mysqli_query($conn, $sql);
+    $num_row = mysqli_num_rows($check_row);
+    $order_id = ($num_row+1);
 
         $query = "SELECT 
         cart.id AS cart_id,
@@ -30,56 +33,42 @@ require_once('../config/config.php');
                 $product_id = $cart['product_id'];
                 $product_name = $cart['type'];
                 $product_quantity = $cart['cart_quantity'];
-                $product_price = $cart['price'] * $product_quantity;
+                $total_quntity = $cart['quantity'];
+                $product_price = $cart['price'] * $cart['cart_quantity'];
                 $seller_id = $cart['seller_id'];
+
 
                 $query = "SELECT credits FROM user WHERE username = '$username'";
                 $result = mysqli_query($conn, $query);
-                $num_row = mysqli_num_rows($result);
-                if($num_row > 0) {
-                    $user = mysqli_fetch_object($result);
-                }
-                if($user->credits >= $product_price){
-                    echo "$user->credits";
-                    echo "$product_price";
-                    $query = "INSERT INTO order_detail
-                        (ord_product_id, ord_helper_id, ord_type, ord_quantity, ord_price, ord_discount, ord_status) 
-                        VALUES 
-                        ('$product_id', '$seller_id', '$product_name', '$product_quantity', '$product_price', '$ord_discount', '1')";
-
-                    $detail_result = mysqli_query($conn, $query);
-                    if(!$detail_result) {
-                        echo "<script>alert('error occurs')</script>";
-                        break;
-                    }
-                    // remove item form cart
-                    $query = "DELETE FROM cart WHERE id = $cart_id";
-                    $remove_cart_result = mysqli_query($conn, $query);
-                    if($remove_cart_result) {
-                        $query = "SELECT * FROM user WHERE username = '$username'";
-                        $result = mysqli_query($conn, $query);
-                        $num_row = mysqli_num_rows($result);
-                        if($num_row > 0) {
-                            $user = mysqli_fetch_object($result);
-                        }
-                        $current_credits = $user->credits - $product_price;
-                        $query = "UPDATE `user` SET `credits`= '$current_credits' WHERE username = '$username'";
-                        $query2 = "INSERT INTO transaction_history(username, amount,date,status) VALUES ('$username', '$product_price', NOW(),'2')";
-                        $query3 = "INSERT INTO orders(id,ord_user_id) VALUES ('$order_id','$username')";
-    
-                        $update_credits = mysqli_query($conn, $query);
-                        $update_transac_history = mysqli_query($conn, $query2);
-                        $order_result = mysqli_query($conn, $query3);
+                $row = mysqli_fetch_assoc($result);
+                $credits_after = $row['credits'] - $product_price;
+                if($row['credits']>=$product_price){
+                    $query1 = "INSERT INTO order_detail
+                            (id, ord_product_id, ord_user_id, ord_helper_id, ord_type, ord_quantity, ord_price, ord_discount, ord_status) 
+                            VALUES 
+                            ('$order_id','$product_id', '$username',  '$seller_id', '$product_name', '$product_quantity', '$product_price', '$ord_discount', '1')";
+                    $query2 = "DELETE FROM cart WHERE id = $cart_id";
+                    $query3 = "INSERT INTO transaction_history(username,order_id, amount,date,status) VALUES ('$username','$order_id', '$product_price', NOW(),'2')";
+                    $query4 = "UPDATE `user` SET `credits`= '$credits_after' WHERE username = '$username'";
+                    $result1 = mysqli_query($conn, $query1);
+                    $result2 = mysqli_query($conn, $query2);
+                    $result3 = mysqli_query($conn, $query3);
+                    $result4 = mysqli_query($conn, $query4);
+                    if($result1 && $result2 && $result3 && $result4){
+                        $output['status'] = 0;
+                        $output['msg'] = 'Order Placed Successfully';
                     }else{
-                        echo "<script>alert('error occurs')</script>";
-                        break;
+                        $output['status'] = 2;
+                        $output['msg'] = 'Error';
                     }
-                }else if ($user->credits < $product_price){
-                    echo "<script>alert('error occurs')</script>";
+                }else{
+                    $output['status'] = 2;
+                    $output['msg'] = 'Credits No Enough !';
                 }
+            mysqli_close($conn);
+            echo json_encode($output);
             }
         }
-        $query = "DELETE";
 // }
 
 ?>

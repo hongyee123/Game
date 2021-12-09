@@ -22,7 +22,7 @@ require_once('../config/verify.php');
             </a>
         </div>
             <?php
-                $query = "SELECT DISTINCT ord_type FROM order_detail";
+                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_helper_id = '$username' AND ord_status = '2'";
                 $result = mysqli_query($conn, $query);
                 if($result) {
                     $num_row = mysqli_num_rows($result);
@@ -61,13 +61,7 @@ require_once('../config/verify.php');
                     $out_set = ($page_num * 5) - 5;
                 }
 
-                $query = "SELECT order_detail.id AS detail_id,
-                                order_detail.ord_type AS type,
-                                order_detail.ord_status AS status,
-                                order_detail.ord_quantity AS quantity,
-                                order_detail.ord_price AS price,
-                                orders.ord_user_id AS user
-                                FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_helper_id = '$username'AND ord_status = '2'";
+                $query = "SELECT * FROM order_detail WHERE ord_helper_id = '$username' AND ord_status = '2'";
 
                 if(isset($_GET['type'])) {
                     $category = $_GET['type'];
@@ -85,13 +79,13 @@ require_once('../config/verify.php');
                             $row = mysqli_fetch_assoc($result);
                             ?>
             <tbody>
-                <tr id="order-<?= $row['detail_id'] ?>">
-                    <th scope="row"><?= $row['detail_id']?></th>
-                    <td><?= $row['type']?></td>
-                    <td><?= $row['user']?></td>
-                    <td><?= $row['quantity']?></td>
+                <tr id="order-<?= $row['id'] ?>">
+                    <th scope="row"><?= $row['id']?></th>
+                    <td><?= $row['ord_type']?></td>
+                    <td><?= $row['ord_user_id']?></td>
+                    <td><?= $row['ord_quantity']?></td>
                     <td>
-                        <input class="btn btn-success btn-done" type="button" value="Done" data-detail_id="<?= $row['detail_id'] ?>">
+                        <input class="btn btn-success btn-done" type="button" value="Done" data-detail_id="<?= $row['id'] ?>">
                     </td>
                 </tr>
                     <?php
@@ -114,6 +108,7 @@ require_once('../config/verify.php');
     $('.btn-done').on('click', function() {
         var detail_id = $(this).data('detail_id');
         var user_id = $(this).data('user_id');
+        var done = "done";
         swal({
             icon: "warning",
             title: "Comfirm Done Order",
@@ -125,11 +120,12 @@ require_once('../config/verify.php');
         .then((confirmDelete) => {
             if(confirmDelete){
                 $.ajax({
-                    url: 'process/helper_done_order_function.php',
+                    url: 'process/order_functions.php',
                     type: 'POST',
                     data: {
                         detail_id : detail_id,
                         user_id : user_id,
+                        done : done,
                     },success: function(){
                         var order_card = $('#order-'+ detail_id).remove();
                         console.log(order_card);
