@@ -123,13 +123,15 @@ if($result) {
     <script>
         $('#btn_placeOrder').on('click', function() {
             discount_total = $('#discount_total').text();
+            var place = "place";
             $.ajax({
-                url: 'process/place_order.php',
+                url: 'process/order_functions.php',
                 type: 'POST',
                 data: {
                     'username' : '<?php echo $username; ?>',
                     
                     'ord_discount' : discount_total,
+                    place:place,
                 },
                 success: function(data) {
                     if(data.status == 0) {

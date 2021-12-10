@@ -22,6 +22,18 @@ if(isset($_GET['tid'])) {
 }else{
     header("Location: index.php");
 }
+
+
+$query = "SELECT * FROM transaction_history WHERE username = '$username' AND id = '$id'";
+$result = mysqli_query($conn, $query);
+if(!$result) 
+    die('Fetch Error');
+else{
+    if($num_row = 1) {
+        $row = mysqli_fetch_assoc($result);
+    }
+}
+
 ?>
 
 <div class="container mt-5">
@@ -58,7 +70,11 @@ if(isset($_GET['tid'])) {
                         </div>
                         <!--end::Shape-->
                         <!--begin::Invoice header-->
-                        <div class="row justify-content-center py-8 px-8 py-md-36 px-md-0 bg-dark">
+                        <div class="row justify-content-center py-8 px-8 py-md-36 px-md-0 bg-<?php if($row['status'] == 1){ echo"success"; 
+                                                            }else if($row['status'] == 2){ echo"danger"; 
+                                                            }else if($row['status'] == 3){ echo"success"; 
+                                                            }else if($row['status'] == 4){ echo"warning"; 
+                                                            }?>">
                             <div class="col-md-9">
                                 <div class="d-flex justify-content-between align-items-md-center flex-column flex-md-row">
                                     <div class="d-flex flex-column px-0 order-2 order-md-1">
@@ -79,18 +95,7 @@ if(isset($_GET['tid'])) {
                             </div>
                         </div>
                         <!--end::Invoice header-->
-                        <?php
-                        $query = "SELECT * FROM transaction_history WHERE username = '$username' AND id = '$id'";
-                        $result = mysqli_query($conn, $query);
-                        if(!$result) 
-                            die('Fetch Error');
-                        else{
-                            if($num_row = 1) {
-                                $row = mysqli_fetch_assoc($result);
-                            }
-                        }
-
-                        ?>
+                        
                         <div class="row justify-content-center py-8 px-8 py-md-30 px-md-0">
                             <div class="col-md-9">
                                 <!--begin::Invoice body-->
@@ -183,19 +188,12 @@ if(isset($_GET['tid'])) {
                                                     <tr class="font-weight-bolder font-size-lg">
                                                         <td class="border-top-0 pl-0 pl-md-5 pt-7 d-flex align-items-center">
                                                         <span class="navi-icon mr-2">
-                                                            <i class="fa fa-genderless text-success font-size-h2"></i>
+                                                            <i class="fa fa-genderless text-warning font-size-h2"></i>
                                                         </span>Withdraw</td>
                                                         <td class="pr-0 pt-7 font-size-h6 font-weight-boldest text-right"></td>
-                                                        <td class="pr-0 pt-7 font-size-h6 font-weight-boldest text-right">RM <?=(($row['amount']/80)*100);?></td>
+                                                        <td class="pr-0 pt-7 font-size-h6 font-weight-boldest text-right">RM <?=$row['amount'];?></td>
                                                     </tr>
-                                                    <tr class="font-weight-bolder border-bottom-0 font-size-lg">
-                                                        <td class="border-top-0 pl-0 pl-md-5 py-4 d-flex align-items-center">
-                                                        <span class="navi-icon mr-2">
-                                                            <i class="fa fa-genderless text-danger font-size-h2"></i>
-                                                        </span>Service Tax</td>
-                                                        <td class="border-top-0 pr-0 py-4 font-size-h6 font-weight-boldest text-right">20%</td>
-                                                        <td class="border-top-0 pr-0 py-4 font-size-h6 font-weight-boldest text-right">- RM <?=($row['amount']/80)*20;?></td>
-                                                    </tr>
+                                                    
                                                     <?php
                                                     }
                                                     ?>
@@ -207,10 +205,10 @@ if(isset($_GET['tid'])) {
                                 <!--end::Invoice body-->
                                 <!--begin::Invoice footer-->
                                 <?php
-                                if ($row['status'] == 3){
+                                if ($row['status'] == 1 || $row['status'] == 2 || $row['status'] == 3){
                                 ?>
                                 <div class="row">
-                                    <div class="col-md-12 pt-md-25">
+                                    <div class="col-md-12">
                                         <div class="bg-primary rounded d-flex align-items-center justify-content-between text-white max-w-350px position-relative ml-auto p-7">
                                             <!--begin::Shape-->
                                             <div class="position-absolute opacity-30 top-0 right-0">

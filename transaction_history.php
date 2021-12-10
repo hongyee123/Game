@@ -51,7 +51,7 @@ if(isset($_SESSION['username'])){
                             $row = mysqli_fetch_assoc($result);
                             ?>
                             <div class="mb-3 col-12">
-                                <div class="card card-custom wave wave-animate wave-<?php if($row['status'] == 1||$row['status'] == 3){echo"success";}else{echo"danger";}?> mb-2 mb-lg-0 ">
+                                <div class="card card-custom wave wave-animate wave-<?php if($row['status'] == 1||$row['status'] == 3){echo"success";}elseif($row['status'] == 4){echo"warning";}else{echo"danger";}?> mb-2 mb-lg-0 ">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-column ">
@@ -68,11 +68,16 @@ if(isset($_SESSION['username'])){
                                             <div class="flex-column">
                                                 <?php if($row['status'] == 1 || $row['status'] == 3){
                                                     ?>
-                                                    <a class="text-success text-hover-primary font-weight-bold font-size-h2 mb-3">+<?= $row['amount'];?></a>
+                                                    <a class="text-success font-weight-bold font-size-h2 mb-3">+<?= $row['amount'];?></a>
                                                     <?php
-                                                }elseif($row['status'] == 2 || $row['status'] == 4){
+                                                }elseif($row['status'] == 2){
                                                     ?>
-                                                    <a class="text-danger text-hover-primary font-weight-bold font-size-h2 mb-3">-<?= $row['amount'];?></a>
+                                                    <a class="text-danger font-weight-bold font-size-h2 mb-3">-<?= $row['amount'];?></a>
+                                                    <?php
+                                                }
+                                                elseif($row['status'] == 4){
+                                                    ?>
+                                                    <a class="text-danger font-weight-bold font-size-h2 mb-3">-<?= $row['amount'];?></a>
                                                     <?php
                                                 }
                                                 ?>

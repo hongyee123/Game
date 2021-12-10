@@ -4,7 +4,7 @@ require_once('../config/config.php');
 
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
 $_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" && 
-$_SERVER['REQUEST_METHOD'] == "POST") {
+$_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['withdraw']))) {
     header('Content-Type: application/json');
     $output = array();
 

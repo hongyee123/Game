@@ -71,12 +71,14 @@ if(isset($_SESSION['username'])){
 
         $('.btn_withdraw').on('click', function() {
             var amount_withdraw = $('#amount_withdraw').val();
+            var withdraw = "withdraw";
             $.ajax({
                 url: 'process/withdraw_function.php',
                 type: 'POST',
                 data: {
                     'username' : '<?php echo $username; ?>',
                     amount_withdraw : amount_withdraw,
+                    withdraw : withdraw,
                 },
                 success: function(data) {
                     if(data.status == 0) {
