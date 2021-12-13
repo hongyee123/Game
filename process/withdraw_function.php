@@ -17,7 +17,7 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['withdraw']))) {
             $result = mysqli_query($conn, $sql);
             if($result){
                 $row = mysqli_fetch_array($result);
-                if($row['credits'] > $amount_withdraw){
+                if($row['credits'] >= $amount_withdraw){
                     $total_withdraw = $row['credits'] - $amount_withdraw;
                     $sql = "UPDATE `user` SET `credits`= '$total_withdraw' WHERE username = '$username'";
                     $result = mysqli_query($conn, $sql);
@@ -45,18 +45,8 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['withdraw']))) {
         $output['status'] = 2;
         $output['msg'] = 'Please Enter Integer number !';
     }
-
-
-
-
-    
-    
-
-
-	
 	mysqli_close($conn);
     echo json_encode($output);
-
 }
 
 ?>

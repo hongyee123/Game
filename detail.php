@@ -1,8 +1,6 @@
 <?php
 // show product detail
 require_once('config/config.php');
-require_once('config/bootstrap.php');
-require_once('layouts.php');
 
 if(isset($_GET['pid'])) {
     $id = $_GET['pid'];
@@ -33,9 +31,6 @@ else {
     $num_row = mysqli_num_rows($result);
     if($num_row > 0) {
         $product = mysqli_fetch_object($result);
-    }
-}
-
 ?>
 
 
@@ -45,13 +40,11 @@ else {
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="row col-12 mt-5">
-            <div class="row col-12">
-                <h1 class="col-12 text-light text-center mb-5">
-                    Order Detail
-                </h1>
-            </div>
+    <div class="row d-flex justify-content-center">
+        <div class="row col-12">
+            <h1 class="col-12 text-light text-center mb-5 mt-5">
+                Order Detail
+            </h1>
         </div>
         <div class="col-xl-8">
             <!--begin::Stats Widget 1-->
@@ -126,6 +119,242 @@ else {
             <!--end::Stats Widget 1-->
         </div>
     </div>
+    <?php
+    }
+}
+    ?>
+    <div class="row">
+        <div class="col-xl-12">
+            <!--begin::Stats Widget 1-->
+            <div class="card card-custom bgi-no-repeat card-stretch gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url(assets/media/svg/shapes/abstract-2.svg)">
+                <!--begin::Body-->
+                <div class="card-body">
+                    <div class="row d-flex justify-content-between pl-3 pr-3">
+                        <h3><b>Comment   a</b></h3>
+                        <div class="card-toolbar d-flex justify-content-end">
+                            <ul class="nav nav-pills nav-pills-sm nav-dark-75">
+                                <li class="nav-item">
+                                    <a class="nav-link py-2 px-4" data-toggle="tab" href="#kt_tab_pane_12_1">1 Star</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link py-2 px-4" data-toggle="tab" href="#kt_tab_pane_12_2">Below 3 Star</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link py-2 px-4 active" data-toggle="tab" href="#kt_tab_pane_12_3">All</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-content mt-5" id="myTabTables12">
+                        <div class="tab-pane fade" id="kt_tab_pane_12_1" role="tabpanel" aria-labelledby="kt_tab_pane_12_1">
+                        <?php
+                        $query = "SELECT ord_user_id, ord_quantity, ord_rate, ord_comment, rate_time, profile_pic FROM order_detail LEFT JOIN user
+                        ON order_detail.ord_user_id = user.username WHERE ord_product_id = '$id' AND ord_rate ='1'";
+                        $result = mysqli_query($conn, $query);
+                        if(!$result) 
+                            die('Fetch Error');
+                        else {
+                            $num_row = mysqli_num_rows($result);
+                            if($num_row > 0) {
+                                for($i = 0; $i < $num_row; $i++) {
+                                    $row = mysqli_fetch_assoc($result);
+                                    ?>
+                                    <div class="row col-12 pl-5 pr-5">
+                                        <div class="symbol symbol-50 symbol-light ">
+                                            <span class="symbol-label">
+                                                <?php   
+                                                if($row['profile_pic']!=null){
+                                                    ?>
+                                                    <img src="<?= $row['profile_pic'] ?>" class="h-50 align-self-center" alt="">
+                                                    <?php
+                                                }else{
+                                                    echo "?";
+                                                }
+                                                ?>
+                                                
+                                            </span>
+                                        </div>
+                                        <div class="col-11 ml-3">
+                                            <a href="#" class="text-dark font-weight-bolder text-hover-primary font-size-lg row col-12"><?= $row['ord_user_id'] ?></a>
+                                            <a href="#" class="text-dark font-weight-bolder text-hover-primary font-size-lg row col-12">
+                                                <?php
+                                                $star = '<label for="rate-5" class="fas fa-star text-warning font-size-xs"></label>';
+                                                if($row['ord_rate']==1){
+                                                    echo $star;
+                                                }elseif($row['ord_rate']==2){
+                                                    echo $star; echo $star;
+                                                }elseif($row['ord_rate']==3){
+                                                    echo $star; echo $star; echo $star;
+                                                }elseif($row['ord_rate']==4){
+                                                    echo $star; echo $star; echo $star; echo $star;
+                                                }elseif($row['ord_rate']==5){
+                                                    echo $star; echo $star; echo $star; echo $star; echo $star;
+                                                }
+                                                ?>
+                                            </a>
+                                            <p class="text-muted font-weight-bold d-block row col-12"><?= $row['ord_comment'] ?></p>
+                                            <p class="text-muted font-size-xs font-weight-bold d-block row col-12"><?= $row['rate_time'] ?></p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <?php
+                                }
+                            }else{
+                                ?>
+                                <div class="row col-12 pl-5 pr-5">
+                                    no comment yet
+                                </div>
+                                <?php
+                            }
+                        }
+                                    ?>
+                        
+
+                        </div>
+                    <!--======================================================================================================================-->
+                        <div class="tab-pane fade" id="kt_tab_pane_12_2" role="tabpanel" aria-labelledby="kt_tab_pane_12_2">
+                        <?php
+                        $query = "SELECT ord_user_id, ord_quantity, ord_rate, ord_comment, rate_time, profile_pic FROM order_detail LEFT JOIN user
+                        ON order_detail.ord_user_id = user.username WHERE ord_product_id = '$id' AND ord_rate <='3'";
+                        $result = mysqli_query($conn, $query);
+                        if(!$result) 
+                            die('Fetch Error');
+                        else {
+                            $num_row = mysqli_num_rows($result);
+                            if($num_row > 0) {
+                                for($i = 0; $i < $num_row; $i++) {
+                                    $row = mysqli_fetch_assoc($result);
+                                    ?>
+                                    <div class="row col-12 pl-5 pr-5">
+                                        <div class="symbol symbol-50 symbol-light ">
+                                            <span class="symbol-label">
+                                                <?php   
+                                                if($row['profile_pic']!=null){
+                                                    ?>
+                                                    <img src="<?= $row['profile_pic'] ?>" class="h-50 align-self-center" alt="">
+                                                    <?php
+                                                }else{
+                                                    echo "?";
+                                                }
+                                                ?>
+                                                
+                                            </span>
+                                        </div>
+                                        <div class="col-11 ml-3">
+                                            <a href="#" class="text-dark font-weight-bolder text-hover-primary font-size-lg row col-12"><?= $row['ord_user_id'] ?></a>
+                                            <a href="#" class="text-dark font-weight-bolder text-hover-primary font-size-lg row col-12">
+                                            <?php
+                                            $star = '<label for="rate-5" class="fas fa-star text-warning font-size-xs"></label>';
+                                            if($row['ord_rate']==1){
+                                                echo $star;
+                                            }elseif($row['ord_rate']==2){
+                                                echo $star; echo $star;
+                                            }elseif($row['ord_rate']==3){
+                                                echo $star; echo $star; echo $star;
+                                            }elseif($row['ord_rate']==4){
+                                                echo $star; echo $star; echo $star; echo $star;
+                                            }elseif($row['ord_rate']==5){
+                                                echo $star; echo $star; echo $star; echo $star; echo $star;
+                                            }
+                                            ?>
+                                            </a>
+                                            <p class="text-muted font-weight-bold d-block row col-12"><?= $row['ord_comment'] ?></p>
+                                            <p class="text-muted font-size-xs font-weight-bold d-block row col-12"><?= $row['rate_time'] ?></p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <?php
+                                }
+                            }else{
+                                ?>
+                                <div class="row col-12 pl-5 pr-5">
+                                    no comment yet
+                                </div>
+                                <?php
+                            }
+                        }
+                                    ?>
+                        
+
+                        </div>
+                        <!--======================================================================================================================-->
+                        <div class="tab-pane fade show active" id="kt_tab_pane_12_3" role="tabpanel" aria-labelledby="kt_tab_pane_12_3">
+                        <?php
+                        $query = "SELECT ord_user_id, ord_quantity, ord_rate, ord_comment, rate_time, profile_pic FROM order_detail LEFT JOIN user
+                        ON order_detail.ord_user_id = user.username WHERE ord_product_id = '$id' AND ord_rate !='0'";
+                        $result = mysqli_query($conn, $query);
+                        if(!$result) 
+                            die('Fetch Error');
+                        else {
+                            $num_row = mysqli_num_rows($result);
+                            if($num_row > 0) {
+                                for($i = 0; $i < $num_row; $i++) {
+                                    $row = mysqli_fetch_assoc($result);
+                                    ?>
+                                    <div class="row col-12 pl-5 pr-5">
+                                        <div class="symbol symbol-50 symbol-light ">
+                                            <span class="symbol-label">
+                                                <?php   
+                                                if($row['profile_pic']!=null){
+                                                    ?>
+                                                    <img src="<?= $row['profile_pic'] ?>" class="h-50 align-self-center" alt="">
+                                                    <?php
+                                                }else{
+                                                    echo "?";
+                                                }
+                                                ?>
+                                                
+                                            </span>
+                                        </div>
+                                        <div class="col-11 ml-3">
+                                            <a href="#" class="text-dark font-weight-bolder text-hover-primary font-size-lg row col-12 mb-1"><?= $row['ord_user_id'] ?></a>
+                                            <a href="#" class="text-dark font-weight-bolder text-hover-primary font-size-lg row col-12">
+                                                <?php
+                                                $star = '<label for="rate-5" class="fas fa-star text-warning font-size-xs"></label>';
+                                                if($row['ord_rate']==1){
+                                                    echo $star;
+                                                }elseif($row['ord_rate']==2){
+                                                    echo $star; echo $star;
+                                                }elseif($row['ord_rate']==3){
+                                                    echo $star; echo $star; echo $star;
+                                                }elseif($row['ord_rate']==4){
+                                                    echo $star; echo $star; echo $star; echo $star;
+                                                }elseif($row['ord_rate']==5){
+                                                    echo $star; echo $star; echo $star; echo $star; echo $star;
+                                                }
+                                                ?>
+                                            </a>
+                                            <p class="text-muted font-weight-bold d-block row col-12"><?= $row['ord_comment'] ?></p>
+                                            <p class="text-muted font-size-xs font-weight-bold d-block row col-12"><?= $row['rate_time'] ?></p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <?php
+                                }
+                            }else{
+                                ?>
+                                <div class="row col-12 pl-5 pr-5">
+                                    no comment yet
+                                </div>
+                                <?php
+                            }
+                        }
+                                    ?>
+                        
+
+                        </div>
+
+
+
+                    </div>
+                    
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Stats Widget 1-->
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

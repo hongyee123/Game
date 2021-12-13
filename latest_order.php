@@ -1,7 +1,5 @@
 <?php
 require_once('config/config.php');
-require_once('config/bootstrap.php');
-require_once('layouts.php');
 
 $pageTitle = 'orders';
 $pageName = 'latest_order';
@@ -34,7 +32,7 @@ if(isset($_SESSION['username'])){
             </a>
         </div>
             <?php
-                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_user_id = '$username'";
+                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_status='1' AND ord_user_id = '$username'";
                 $result = mysqli_query($conn, $query);
                 if($result) {
                     $num_row = mysqli_num_rows($result);
@@ -52,7 +50,6 @@ if(isset($_SESSION['username'])){
             }
         }
     ?>
-
     <div class="row col-12 mt-5">
             <table class="table table-light rounded">
                 <thead class="thead-dark">
@@ -73,7 +70,7 @@ if(isset($_SESSION['username'])){
                         $out_set = ($page_num * 5) - 5;
                     }
 
-                    $query = "SELECT * FROM order_detail WHERE ord_user_id= '$username'";
+                    $query = "SELECT * FROM order_detail WHERE ord_user_id = '$username' AND ord_status = '1'";
 
                     if(isset($_GET['type'])) {
                         $category = $_GET['type'];

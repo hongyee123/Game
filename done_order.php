@@ -1,7 +1,5 @@
 <?php
 require_once('config/config.php');
-require_once('config/bootstrap.php');
-require_once('layouts.php');
 
 $pageTitle = 'orders';
 $pageName = 'done_order';
@@ -32,14 +30,14 @@ if(isset($_SESSION['username'])){
                 </button>
             </a>
         </div>
-            <?php
-                $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_status='4' AND ord_user_id = '$username'";
-                $result = mysqli_query($conn, $query);
-                if($result) {
-                    $num_row = mysqli_num_rows($result);
-                    for($i = 0; $i < $num_row; $i++) {
-                        $row = mysqli_fetch_assoc($result);
-            ?>
+        <?php
+            $query = "SELECT DISTINCT ord_type FROM order_detail WHERE ord_status='4' AND ord_user_id = '$username'";
+            $result = mysqli_query($conn, $query);
+            if($result) {
+                $num_row = mysqli_num_rows($result);
+                for($i = 0; $i < $num_row; $i++) {
+                    $row = mysqli_fetch_assoc($result);
+        ?>
         <div class="col-3 text-center active">
             <a class="white" href="?type=<?= $row['ord_type'] ?>">
                 <button type="button" class="btn btn-secondary col-12">
@@ -47,12 +45,12 @@ if(isset($_SESSION['username'])){
                 </button>
             </a>
         </div>
-    <?php
+        <?php
             }
         }
-    ?>
+        ?>
 
-    <div class="row col-12 mt-5">
+        <div class="row col-12 mt-5">
             <table class="table table-light rounded">
                 <thead class="thead-dark">
                         <tr>
@@ -132,7 +130,7 @@ if(isset($_SESSION['username'])){
                     }
                 }
                 ?>
-                    </div>
+                
                 </tbody>
             </table>
         </div>

@@ -60,6 +60,7 @@ if(isset($_SESSION['username'])){
                                                             }else if($row['status'] == 2){ echo"Payment"; 
                                                             }else if($row['status'] == 3){ echo"Earn"; 
                                                             }else if($row['status'] == 4){ echo"Withdraw"; 
+                                                            }else if($row['status'] == 5){ echo"Withdraw"; 
                                                             } 
                                                     ?>
                                                 </a>
