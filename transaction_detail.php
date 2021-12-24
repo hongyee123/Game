@@ -24,7 +24,18 @@ if(isset($_GET['tid'])) {
 }
 
 
-$query = "SELECT * FROM transaction_history WHERE username = '$username' AND id = '$id'";
+$query = "SELECT    transaction_history.id as id,
+                    transaction_history.order_id as order_id,
+                    transaction_history.amount as amount,
+                    transaction_history.transaction_date as transaction_date,
+                    transaction_history.admin as admin,
+                    transaction_history.status as status,
+                    transaction_history.username as username,
+                    helper.name as name,
+                    helper.bank_name as bank_name,
+                    helper.bank_acc as bank_acc
+                    FROM transaction_history LEFT JOIN helper ON transaction_history.username=helper.helper_id WHERE id = '$id'";
+
 $result = mysqli_query($conn, $query);
 if(!$result) 
     die('Fetch Error');
@@ -73,7 +84,7 @@ else{
                         <div class="row justify-content-center py-8 px-8 py-md-36 px-md-0 bg-<?php if($row['status'] == 1){ echo"success"; 
                                                             }else if($row['status'] == 2){ echo"danger"; 
                                                             }else if($row['status'] == 3){ echo"success"; 
-                                                            }else if($row['status'] == 4){ echo"warning"; 
+                                                            }else if($row['status'] == 5){ echo"warning"; 
                                                             }?>">
                             <div class="col-md-9">
                                 <div class="d-flex justify-content-between align-items-md-center flex-column flex-md-row">
@@ -111,7 +122,7 @@ else{
                                         <!--end::Invoice No-->
                                         <!--begin::Invoice Date-->
                                         <div class="text-dark-50 font-size-lg font-weight-bold mb-3">DATE</div>
-                                        <div class="font-size-lg font-weight-bold"><?=$row['date']?></div>
+                                        <div class="font-size-lg font-weight-bold"><?=$row['transaction_date']?></div>
                                         <!--end::Invoice Date-->
                                     </div>
                                     <div class="col-md-9 py-10 pl-md-10">
@@ -183,7 +194,7 @@ else{
 
 
                                                     <?php
-                                                    if ($row['status'] == 4){
+                                                    if ($row['status'] == 5){
                                                         ?>
                                                     <tr class="font-weight-bolder font-size-lg">
                                                         <td class="border-top-0 pl-0 pl-md-5 pt-7 d-flex align-items-center">
@@ -248,15 +259,15 @@ else{
                                                 <div class="font-weight-bold font-size-h6 mb-3">BANK TRANSFER</div>
                                                 <div class="d-flex justify-content-between font-size-lg mb-3">
                                                     <span class="font-weight-bold mr-15">Account Name:</span>
-                                                    <span class="text-right">User123123</span>
+                                                    <span class="text-right"><?=$row['name'];?></span>
                                                 </div>
                                                 <div class="d-flex justify-content-between font-size-lg mb-3">
                                                     <span class="font-weight-bold mr-15">Account Number:</span>
-                                                    <span class="text-right">12345678901234</span>
+                                                    <span class="text-right"><?=$row['bank_acc'];?></span>
                                                 </div>
                                                 <div class="d-flex justify-content-between font-size-lg">
                                                     <span class="font-weight-bold mr-15">Code:</span>
-                                                    <span class="text-right">BARC0032UK</span>
+                                                    <span class="text-right"><?=$row['bank_name'];?></span>
                                                 </div>
                                             </div>
                                         </div>

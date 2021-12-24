@@ -1,37 +1,33 @@
 <?php
 require_once('config/config.php');
 
-$pageTitle = 'credits';
-$pageName = 'history';
+$pageTitle = 'user';
+$pageName = 'request';
 
-if(!isset($_SESSION['username']) && !isset($_SESSION['helper_id'])){
-    header("Location: index.php");
-}
-if(isset($_SESSION['username'])){
-    include('layout/in.php');
-    $username = $_SESSION['username'];
-}if(isset($_SESSION['helper_id'])){
-    include('layout/helper_in.php');
-    $username = $_SESSION['helper_id'];
-}
+$username = $_SESSION['admin'];
 
+if(isset($_SESSION['admin'])){
+    include('layout/admin_in.php');
+}
+if(!isset($_SESSION['admin'])){
+    header("Location: admin_login.php");
+}
 
 ?>
 
 <div class="container mt-5">
     <div class="row col-12  mb-5">
         <h1 class="col-12 text-light text-center mb-5">
-            Transaction History
+            Withdraw Request
         </h1>
     </div>
     <div class="row">
         <div class="col-12">
             <div class="row">
                 <?php
-                $sql = "SELECT * FROM transaction_history WHERE username = '$username'";
+                $sql = "SELECT * FROM transaction_history WHERE status = '4'";
                 $result = mysqli_query($conn, $sql);
                 $total_row = mysqli_num_rows($result);
-               
 
                 $page_num = @$_GET['page'];
                 if($page_num == 0 || $page_num == 1) {
@@ -39,7 +35,7 @@ if(isset($_SESSION['username'])){
                 } else {
                     $out_set = ($page_num * 10) - 10;
                 }
-                $query = "SELECT * FROM transaction_history WHERE username = '$username' ORDER BY transaction_date DESC LIMIT $out_set, 10";
+                $query = "SELECT * FROM transaction_history WHERE status = '4' ORDER BY request_date ASC LIMIT $out_set, 10";
                 $result = mysqli_query($conn, $query);
                 if(!$result) 
                     die('Fetch Error');
@@ -51,37 +47,17 @@ if(isset($_SESSION['username'])){
                             $row = mysqli_fetch_assoc($result);
                             ?>
                             <div class="mb-3 col-12">
-                                <div class="card card-custom wave wave-animate wave-<?php if($row['status'] == 1||$row['status'] == 3){echo"success";}elseif($row['status'] == 4||5){echo"warning";}else{echo"danger";}?> mb-2 mb-lg-0 ">
+                                <div class="card card-custom wave wave-animate wave-warning mb-2 mb-lg-0 ">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-column ">
-                                                <a href="<?php if($row['status'] != 4){ echo "transaction_detail.php?tid="+$row['id'];}?>" class="text-dark text-hover-primary font-weight-bold font-size-h2 d-flex">
-                                                    <?php   if($row['status'] == 1){ echo"Topup"; 
-                                                            }else if($row['status'] == 2){ echo"Payment"; 
-                                                            }else if($row['status'] == 3){ echo"Earn"; 
-                                                            }else if($row['status'] == 4){ echo"Withdraw (Pending)"; 
-                                                            }else if($row['status'] == 5){ echo"Withdraw"; 
-                                                            } 
-                                                    ?>
+                                                <a href="admin_withdraw_request_form.php?rid=<?=$row['id']?>" class="text-dark text-hover-primary font-weight-bold font-size-h2 d-flex">
+                                                    <?=$row['username']?>
                                                 </a>
                                                 <a class="text-dark"><?= $row['request_date'];?></a>
                                             </div>
                                             <div class="flex-column">
-                                                <?php if($row['status'] == 1 || $row['status'] == 3){
-                                                    ?>
-                                                    <a class="text-success font-weight-bold font-size-h2 mb-3">+<?= $row['amount'];?></a>
-                                                    <?php
-                                                }elseif($row['status'] == 2){
-                                                    ?>
-                                                    <a class="text-danger font-weight-bold font-size-h2 mb-3">-<?= $row['amount'];?></a>
-                                                    <?php
-                                                }
-                                                elseif($row['status'] == 4||$row['status'] == 5){
-                                                    ?>
-                                                    <a class="text-warning font-weight-bold font-size-h2 mb-3">-<?= $row['amount'];?></a>
-                                                    <?php
-                                                }
-                                                ?>
+                                                <a class="text-success font-weight-bold font-size-h2 mb-3"><?= $row['amount'];?></a>
                                             </div>
                                         </div>
                                     </div>
@@ -91,6 +67,7 @@ if(isset($_SESSION['username'])){
                         }
                     } else {
                 ?>
+                <div class="col-12 text-center">No Any Transaction History</div>
                 <div class="col-3 text-center"></div>
                     <div class="col-6 card card-custom mb-lg-0 text-center align-items-center mt-5">
                         <div class="card-body">
@@ -113,15 +90,11 @@ if(isset($_SESSION['username'])){
     <div class="d-flex justify-content-between align-items-center flex-wrap col-12 mb-5">
         <div class="d-flex flex-wrap py-2 m-auto">
             <?php 
-            if($total_row>=11){
+            if($page_num>1){
                 ?>
                 <a href="<?= $_SERVER['PHP_SELF'] .'?page=1'?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-back icon-xs"></i></a>
+                <a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page_num-1) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
                 <?php
-                if($page_num!=1){
-                    ?>
-                    <a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page_num-1) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
-                    <?php
-                }
                 $page = ceil($total_row / 10);
                 for($i = 1;$i <= $page; $i ++)
                 $range = 2;
@@ -161,12 +134,9 @@ if(isset($_SESSION['username'])){
                         } // end else
                     } // end if 
                 } // end for
-                if($total_row>($page_num*10)){
-                    ?>
-                    <a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page_num-1) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
-                    <?php
-                }
-                ?><a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+                ?>
+                <a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page_num+1) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
+                <a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
 
                 <?php
             }else{
