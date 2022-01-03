@@ -3,14 +3,6 @@ require_once('../config/config.php');
 
 
 
-
-
-
-
-
-
-
-
 //  1   place order
 
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 

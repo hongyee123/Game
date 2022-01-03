@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_game/home.dart';
 import 'package:mobile_game/start_order.dart';
+import 'package:mobile_game/list_cart.dart';
 import 'package:mobile_game/login.dart';
-
 import 'model/user.dart';
+import 'model/cart.dart';
+
 
 class NavBar extends StatefulWidget {
 
   final User user;
-
   const NavBar({Key? key, required this.user}) : super(key: key);
 
   @override
@@ -45,6 +47,13 @@ class _NavBarState extends State<NavBar> {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Home(user: widget.user,)));
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.local_mall),
             title: Text('Start Order'),
             onTap: () {
@@ -52,8 +61,14 @@ class _NavBarState extends State<NavBar> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('favorite'),
+            leading: Icon(Icons.shopping_cart),
+            title: Text('Cart'),
+            onTap: () {
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.assignment_outlined),
+            title: Text('Order Detail'),
             onTap: ()=>null,
           ),
           Divider(),
@@ -64,7 +79,7 @@ class _NavBarState extends State<NavBar> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.favorite),
+            leading: Icon(Icons.exit_to_app),
             title: Text('Exit'),
             onTap: (){
               Navigator.push(context,MaterialPageRoute(builder: (context) => Login())); 

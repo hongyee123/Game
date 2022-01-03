@@ -180,6 +180,23 @@ $helper_id = ($_SESSION['username']);
                                                 <input type="text" class="form-control form-control-solid form-control-lg" placeholder="State" id="state" required>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label class="text-light font-weight-bold">Bank Name</label>
+                                                <select class="form-control form-control-lg" id="select">
+                                                    <option disabled selected value="">Bank Name</option>
+                                                    <option value="Maybank">Maybank</option>
+                                                    <option value="RHB">RHB</option>
+                                                    <option value="CIMB">CIMB</option>
+                                                    <option value="CIMB">CIMB</option>
+                                                    <option value="CIMB">CIMB</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label class="text-light font-weight-bold">Bank Account</label>
+                                                <input type="text" class="form-control form-control-solid form-control-lg" placeholder="Bank Account" id="bank_account" required>
+                                            </div>
+                                        </div>
                                         <div>
                                             <div class="checkbox-inline mt-4">
                                                 <label class="checkbox checkbox-lg checkbox-danger">
@@ -224,189 +241,192 @@ $helper_id = ($_SESSION['username']);
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
+var photo = null;
+var ic_pic = null;
 
-        var photo = null;
-        var ic_pic = null;
+$('#photo').change(function() {
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
 
-        $('#photo').change(function() {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
+        reader.onload = function (e) {
+            photo = e.target.result;
+        }
 
-                reader.onload = function (e) {
-                    photo = e.target.result;
+        reader.readAsDataURL(this.files[0]);
+    }
+});
+
+$('#ic_pic').change(function() {
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            ic_pic = e.target.result;
+        }
+
+        reader.readAsDataURL(this.files[0]);
+    }
+});
+
+
+
+$(document).ready(function() {
+    $('.btn_submit').on('click', function() {
+        var name = document.getElementById("name").value;
+        var ic = document.getElementById("ic").value;
+        var address1 = document.getElementById("address1").value;
+        var postcode = document.getElementById("postcode").value;
+        var state = document.getElementById("state").value;
+        var bank_name = document.getElementById("bank_name").value;
+        var bank_account = document.getElementById("bank_account").value;
+        var url = 'process/helper_register_function.php';
+
+        var box1_bool = $('#box1:checked').length == 1;
+        var box2_bool = $('#box2:checked').length == 1;
+        console.log(box1_bool && box2_bool);
+
+        var box1_bool = $('#box1:checked').length == 1;
+        var box2_bool = $('#box2:checked').length == 1;
+
+        if(box1_bool && box2_bool){
+            $.post({
+            url: url,
+            data: {
+                ic: ic,
+                name: name,
+                address1: address1,
+                // address2: address2,
+                postcode: postcode,
+                state: state,
+                bank_name: bank_name,
+                bank_account: bank_account,
+                photo: photo,
+                ic_pic: ic_pic,
+            },
+            success: function (result) {
+                if(result.status == 0) {
+                    swal({
+                        icon: "success",
+                        title: "Success",
+                        text: result.msg,
+                        timer: 1100,
+                        buttons: false,
+                    }).then(function(){
+                    window.location.assign('helper_register.php');
+                });
                 }
-
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-        $('#ic_pic').change(function() {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    ic_pic = e.target.result;
-                }
-
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-
-
-    $(document).ready(function() {
-        $('.btn_submit').on('click', function() {
-            var name = document.getElementById("name").value;
-            var ic = document.getElementById("ic").value;
-            var address1 = document.getElementById("address1").value;
-            var postcode = document.getElementById("postcode").value;
-            var state = document.getElementById("state").value;
-            var url = 'process/helper_register_function.php';
-
-            var box1_bool = $('#box1:checked').length == 1;
-            var box2_bool = $('#box2:checked').length == 1;
-            console.log(box1_bool && box2_bool);
-
-            var box1_bool = $('#box1:checked').length == 1;
-            var box2_bool = $('#box2:checked').length == 1;
-
-            if(box1_bool && box2_bool){
-                $.post({
-                url: url,
-                data: {
-                    ic: ic,
-                    name: name,
-                    address1: address1,
-                    // address2: address2,
-                    postcode: postcode,
-                    state: state,
-                    photo: photo,
-                    ic_pic: ic_pic,
-                },
-                success: function (result) {
-                    if(result.status == 0) {
-                        swal({
-                            icon: "success",
-                            title: "Success",
-                            text: result.msg,
-                            timer: 1100,
-                            buttons: false,
-                        }).then(function(){
-                        window.location.assign('helper_register.php');
+                if(result.status == 2) {
+                    swal({
+                        icon: "warning",
+                        text: result.msg,
+                        timer: 1100,
+                        buttons: false,
                     });
-                    }
-                    if(result.status == 2) {
-                        swal({
-                            icon: "warning",
-                            text: result.msg,
-                            timer: 1100,
-                            buttons: false,
-                        });
-                    }
-                    if(result.status == 3) {
-                        swal({
-                            icon: "error",
-                            title: "An error occurred.",
-                            text: "Credits no enough - Please Top-up " ,
-                            timer: 2500,
-                            buttons: false,
-                        });
-                    }
                 }
-                    
-            });
-            }else if(box1_bool){
-                swal({
-                    icon: "warning",
-                    title: "Warning",
-                    text: 'Please read the term and condition',
-                    timer: 1100,
-                    buttons: false,
-                });
-            }else if(box2_bool){
-                swal({
-                    icon: "warning",
-                    title: "Warning",
-                    text: 'You have to pay 100 as deposit',
-                    timer: 2500,
-                    buttons: false,
-                });
-            }else{
-                swal({
-                    icon: "warning",
-                    title: "Warning",
-                    text: 'You have to pay 100 as deposit',
-                    timer: 2500,
-                    buttons: false,
-                });
+                if(result.status == 3) {
+                    swal({
+                        icon: "error",
+                        title: "An error occurred.",
+                        text: "Credits no enough - Please Top-up " ,
+                        timer: 2500,
+                        buttons: false,
+                    });
+                }
             }
+                
         });
+        }else if(box1_bool){
+            swal({
+                icon: "warning",
+                title: "Warning",
+                text: 'Please read the term and condition',
+                timer: 1100,
+                buttons: false,
+            });
+        }else if(box2_bool){
+            swal({
+                icon: "warning",
+                title: "Warning",
+                text: 'You have to pay 100 as deposit',
+                timer: 2500,
+                buttons: false,
+            });
+        }else{
+            swal({
+                icon: "warning",
+                title: "Warning",
+                text: 'You have to pay 100 as deposit',
+                timer: 2500,
+                buttons: false,
+            });
+        }
     });
+});
 
-    
-    var avatar1 = new KTImageInput('kt_image_1');
-    avatar1.on('cancel', function(imageInput) {
-        swal({
-            title: 'Image successfully changed !',
-            type: 'success',
-            buttonsStyling: false,
-            confirmButtonText: 'Awesome!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
+
+var avatar1 = new KTImageInput('kt_image_1');
+avatar1.on('cancel', function(imageInput) {
+    swal({
+        title: 'Image successfully changed !',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Awesome!',
+        confirmButtonClass: 'btn btn-primary font-weight-bold'
     });
+});
 
-    avatar1.on('change', function(imageInput) {
-        swal({
-            title: 'Image successfully changed !',
-            type: 'success',
-            buttonsStyling: false,
-            confirmButtonText: 'Awesome!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
+avatar1.on('change', function(imageInput) {
+    swal({
+        title: 'Image successfully changed !',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Awesome!',
+        confirmButtonClass: 'btn btn-primary font-weight-bold'
     });
+});
 
-    avatar1.on('remove', function(imageInput) {
-        swal({
-            title: 'Image successfully removed !',
-            type: 'error',
-            buttonsStyling: false,
-            confirmButtonText: 'Got it!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
+avatar1.on('remove', function(imageInput) {
+    swal({
+        title: 'Image successfully removed !',
+        type: 'error',
+        buttonsStyling: false,
+        confirmButtonText: 'Got it!',
+        confirmButtonClass: 'btn btn-primary font-weight-bold'
     });
+});
 
 
 
-    var avatar2 = new KTImageInput('kt_image_2');
-    avatar2.on('cancel', function(imageInput) {
-        swal({
-            title: 'Image successfully changed !',
-            type: 'success',
-            buttonsStyling: false,
-            confirmButtonText: 'Awesome!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
+var avatar2 = new KTImageInput('kt_image_2');
+avatar2.on('cancel', function(imageInput) {
+    swal({
+        title: 'Image successfully changed !',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Awesome!',
+        confirmButtonClass: 'btn btn-primary font-weight-bold'
     });
+});
 
-    avatar2.on('change', function(imageInput) {
-        swal({
-            title: 'Image successfully changed !',
-            type: 'success',
-            buttonsStyling: false,
-            confirmButtonText: 'Awesome!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
+avatar2.on('change', function(imageInput) {
+    swal({
+        title: 'Image successfully changed !',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Awesome!',
+        confirmButtonClass: 'btn btn-primary font-weight-bold'
     });
+});
 
-    avatar2.on('remove', function(imageInput) {
-        swal({
-            title: 'Image successfully removed !',
-            type: 'error',
-            buttonsStyling: false,
-            confirmButtonText: 'Got it!',
-            confirmButtonClass: 'btn btn-primary font-weight-bold'
-        });
+avatar2.on('remove', function(imageInput) {
+    swal({
+        title: 'Image successfully removed !',
+        type: 'error',
+        buttonsStyling: false,
+        confirmButtonText: 'Got it!',
+        confirmButtonClass: 'btn btn-primary font-weight-bold'
     });
+});
 
 
     

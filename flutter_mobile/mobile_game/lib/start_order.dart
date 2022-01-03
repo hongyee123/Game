@@ -3,6 +3,7 @@ import 'package:mobile_game/controller/product_controller.dart';
 import 'package:mobile_game/list_start_order.dart';
 import 'package:mobile_game/model/product.dart';
 import 'package:mobile_game/model/user.dart';
+import 'package:mobile_game/NavBar.dart';
 
 class StartOrder extends StatefulWidget {
 
@@ -18,33 +19,13 @@ class _StartOrderState extends State<StartOrder> {
   List<Product> listProduct = [];
 
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   productController.fetchProduct(widget.user);
-  //   super.initState();
-  // }
-
-  @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Start Order'),
-  //     ),
-      
-  //     body: ListView.builder(
-  //       itemCount: listProduct.length,
-  //       itemBuilder: (context, index) => ListStartOrder(
-  //         product: listProduct[index],
-  //       ),
-        
-  //     )
-  //   );
-  // }
-
 
   Widget build(BuildContext context) {
+    
     return Scaffold(
+      drawer: NavBar(user: widget.user),
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Start Order'),
       ),
 
@@ -56,6 +37,7 @@ class _StartOrderState extends State<StartOrder> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) => ListStartOrder(
                 product: snapshot.data![index],
+                user: widget.user
               ),
             );
           } 

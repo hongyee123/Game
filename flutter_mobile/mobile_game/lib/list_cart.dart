@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_game/model/product.dart';
 import 'package:mobile_game/model/user.dart';
+import 'package:mobile_game/model/cart.dart';
 import 'package:mobile_game/product_detail.dart';
 
-class ListStartOrder extends StatefulWidget {
+class ListCart extends StatefulWidget {
 
-  final Product product;
   final User user;
-  const ListStartOrder({ Key? key, required this.product, required this.user}) : super(key: key);
+  final Cart cart;
+  final Product product;
+  const ListCart({ Key? key, required this.user, required this.cart, required this.product}) : super(key: key);
 
   @override
-  _ListStartOrderState createState() => _ListStartOrderState();
+  _ListCartState createState() => _ListCartState();
 }
 
-class _ListStartOrderState extends State<ListStartOrder> {
+class _ListCartState extends State<ListCart> {
   @override
   Widget build(BuildContext context) {
     return Card(
       child:InkWell(
         child:Padding(
-          padding: const EdgeInsets.only(top:5, bottom: 20, right: 50, left: 20),
+          padding: const EdgeInsets.only(top:5, bottom: 20, right: 20, left: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -33,13 +36,19 @@ class _ListStartOrderState extends State<ListStartOrder> {
                 ),
               ),
               Text(
-                widget.product.username,
+                "Helper    : RM${widget.product.username}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                "RM${widget.product.price} / per game",
+                "Price       : RM${widget.product.price} / per game",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "Quantity : ${widget.cart.cart_quantity}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -47,10 +56,8 @@ class _ListStartOrderState extends State<ListStartOrder> {
             ],
           ) ,
         ),
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(product: widget.product, user: widget.user)));
-        }
       )
     );
   }
 }
+

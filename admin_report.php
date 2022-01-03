@@ -1,8 +1,8 @@
 <?php
 require_once('config/config.php');
 
-$pageTitle = 'user';
-$pageName = 'request';
+$pageTitle = 'report';
+$pageName = 'report';
 
 $username = $_SESSION['admin'];
 
@@ -18,14 +18,14 @@ if(!isset($_SESSION['admin'])){
 <div class="container mt-5">
     <div class="row col-12  mb-5">
         <h1 class="col-12 text-light text-center mb-5">
-            Withdraw Request
+            Report from User
         </h1>
     </div>
     <div class="row">
         <div class="col-12">
             <div class="row">
                 <?php
-                $sql = "SELECT * FROM transaction_history WHERE status = '4'";
+                $sql = "SELECT * FROM report LEFT JOIN order_detail ON report.ord_id = order_detail.id WHERE status = '1'";
                 $result = mysqli_query($conn, $sql);
                 $total_row = mysqli_num_rows($result);
 
@@ -35,7 +35,7 @@ if(!isset($_SESSION['admin'])){
                 } else {
                     $out_set = ($page_num * 10) - 10;
                 }
-                $query = "SELECT * FROM transaction_history WHERE status = '4' ORDER BY request_date ASC LIMIT $out_set, 10";
+                $query = "SELECT * FROM report LEFT JOIN order_detail ON report.ord_id = order_detail.id WHERE status = '1' ORDER BY report_time ASC LIMIT $out_set, 10";
                 $result = mysqli_query($conn, $query);
                 if(!$result) 
                     die('Fetch Error');
@@ -47,17 +47,17 @@ if(!isset($_SESSION['admin'])){
                             $row = mysqli_fetch_assoc($result);
                             ?>
                             <div class="mb-3 col-12">
-                                <div class="card card-custom wave wave-animate wave-warning mb-2 mb-lg-0 ">
+                                <div class="card card-custom wave wave-animate wave-primary mb-2 mb-lg-0 ">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-column ">
-                                                <a href="admin_withdraw_request_form.php?rid=<?=$row['id']?>" class="text-dark text-hover-primary font-weight-bold font-size-h2 d-flex">
-                                                    <?=$row['username']?>
+                                                <a href="admin_report_form.php?rid=<?=$row['id']?>" class="text-dark text-hover-primary font-weight-bold font-size-h2 d-flex">
+                                                    <?=$row['ord_user_id']?>
                                                 </a>
-                                                <a class="text-dark"><?= $row['request_date'];?></a>
+                                                <a class="text-dark"><?= $row['report_time'];?></a>
                                             </div>
                                             <div class="flex-column">
-                                                <a class="text-success font-weight-bold font-size-h2 mb-3"><?= $row['amount'];?></a>
+                                                <a class="font-weight-bold font-size-h2 mb-3"><?= $row['reason'];?></a>
                                             </div>
                                         </div>
                                     </div>

@@ -15,12 +15,27 @@ class ProductController {
     );
 
     var productdata = json.decode(response.body);
-    inspect(productdata);
 
     List<Product> list = [];
     
-  list = List<Product>.from(productdata.map((e) => Product.fromJson(e)));
+    list = List<Product>.from(productdata.map((e) => Product.fromJson(e)));
 
-  return list;
+    return list;
+  }
+
+  Future<int> addCart(String username, String id, int qty) async {
+    dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/add_cart.php"), 
+      body: {
+        'username': username,
+        'id': id,
+        'quantity': qty.toString()
+      }
+    );
+
+    var addcart = json.decode(response.body);
+
+    int status;
+    status = addcart["status"];
+    return status;
   }
 }

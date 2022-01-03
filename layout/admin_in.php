@@ -105,7 +105,7 @@
                                     <!--end::Item-->
                                     <!--begin::Item-->
                                     <li class="nav-item mr-3">
-                                        <a href="#" class="nav-link py-4 px-6 <?php if($pageTitle == 'recieve') echo 'active';?>" data-toggle="tab" data-target="#kt_header_tab_4" role="tab">Report</a>
+                                        <a href="#" class="nav-link py-4 px-6 <?php if($pageTitle == 'report') echo 'active';?>" data-toggle="tab" data-target="#kt_header_tab_4" role="tab">Report</a>
                                     </li>
                                     <!--end::Item-->
                                 </ul>
@@ -260,7 +260,7 @@
                                                 <!--begin::Nav-->
                                                 <ul class="menu-nav">
                                                     <li class="menu-item menu-item-<?php if($pageName == 'report') echo 'active';?>" aria-haspopup="true">
-                                                        <a href="helper_view_order_information.php" class="menu-link">
+                                                        <a href="admin_report.php" class="menu-link">
                                                             <span class="menu-text">Report</span>
                                                         </a>
                                                     </li>

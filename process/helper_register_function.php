@@ -16,6 +16,8 @@ include '../config/test_input.php';
         $state = $_POST['state'];
         $photo = $_POST['photo'];
         $ic_pic = $_POST['ic_pic'];
+        $bank_name = $_POST['bank_name'];
+        $bank_account = $_POST['bank_account'];
     
         $query = "SELECT credits FROM user WHERE username = '$helper_id'";
         $result = mysqli_query($conn, $query);
@@ -54,7 +56,7 @@ include '../config/test_input.php';
                     save_file($_POST['photo'], $photo_file_name);
                     save_file($_POST['ic_pic'], $ic_file_name);
 
-                    $reg = "INSERT INTO helper (`helper_id`,`name`, `ic`,`address1`,`postcode`,`state`,`photo`,`ic_pic`,`status`) VALUES ('$helper_id','$name','$ic','$address1','$postcode','$state','$photo_file_name','$ic_file_name','1');";
+                    $reg = "INSERT INTO helper (`helper_id`,`name`, `ic`,bank_name,bank_acc,`address1`,`postcode`,`state`,`photo`,`ic_pic`,`status`) VALUES ('$helper_id','$name','$ic','$bank_name','$bank_account','$address1','$postcode','$state','$photo_file_name','$ic_file_name','1');";
                     // $reg = "INSERT INTO helper (`helper_id`,`name`, `ic`,`address1`, `address2`,`postcode`,`state`,`status`) VALUES ('$helper_id','$name','$ic','$address1','$address2','$postcode','$state','1');";
                     $done = mysqli_query($conn,$reg);
                     if($done){
@@ -86,13 +88,13 @@ include '../config/test_input.php';
 // }
                 // base64 data   file path
 function save_file($data            ,$file_path)
-            {
-                list($type, $data) = explode(';', $data);
-                list(, $data)      = explode(',', $data);
-            
-                $data = base64_decode($data);
-            
-                file_put_contents($file_path, $data);
-            }
+{
+    list($type, $data) = explode(';', $data);
+    list(, $data)      = explode(',', $data);
+
+    $data = base64_decode($data);
+
+    file_put_contents($file_path, $data);
+}
 
 ?>
