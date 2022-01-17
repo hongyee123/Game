@@ -69,7 +69,7 @@ if(isset($_SESSION['username'])){
 		<br>
 		<div class="row">
 			<?php
-			$sql = "SELECT * FROM notice";
+			$sql = "SELECT * FROM notice WHERE status ='1'";
 			$result = mysqli_query($conn, $sql);
 			if(mysqli_num_rows($result) > 0){
 				while($row = mysqli_fetch_assoc($result)){

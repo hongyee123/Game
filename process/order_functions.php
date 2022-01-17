@@ -226,7 +226,7 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['comfirm']))) {
 				$new_credits = ($credits + $total)/100*80;
 				$sql = "UPDATE order_detail SET ord_status = ('4') WHERE id = '$detail_id'";
 				$result = mysqli_query($conn, $sql);
-				$sql2 = "INSERT INTO `transaction_history`(`order_id`, `username`, `amount`, `date`, `status`) VALUES ('$detail_id','$helper','$new_credits',now(),'3')";
+				$sql2 = "INSERT INTO `transaction_history`(`order_id`, `username`, `amount`, `transaction_date`, `status`) VALUES ('$detail_id','$helper','$new_credits',now(),'3')";
 				$result2 = mysqli_query($conn, $sql2);
 				$sql3 = "UPDATE user SET credits = '$new_credits' WHERE username = '$helper'";
 				$result3 = mysqli_query($conn, $sql3);
