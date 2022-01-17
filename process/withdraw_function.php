@@ -63,8 +63,8 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['done_withdraw']))) {
 
 
     if($evidence!=null){
-        $evidenve_file_name = '../images/evidence/'.$_POST['id'] .'/evidence.png';
-        $target_dir = '../images/evidence/'.$_POST['id'];
+        $evidenve_file_name = '../images/evidence_transaction/'.$_POST['id'] .'/evidence.png';
+        $target_dir = '../images/evidence_transaction/'.$_POST['id'];
         if (!file_exists($target_dir))
             mkdir($target_dir);
     

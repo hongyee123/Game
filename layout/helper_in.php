@@ -275,11 +275,7 @@
                                         <a href="#" class="nav-link btn btn-clean <?php if($pageTitle == 'orders') echo 'active';?>" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Orders
                                         <?php
                                             $username = $_SESSION['helper_id'];
-                                            $query = "SELECT order_detail.ord_helper_id AS helper,
-                                                            order_detail.ord_status AS status,
-                                                            SUM(order_detail.ord_quantity) AS total_order,
-                                                            orders.ord_user_id AS user
-                                                            FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_user_id = '$username' AND ord_status = '3'";
+                                            $query = "SELECT * FROM order_detail  WHERE ord_user_id = '$username' AND ord_status = '3'";
                                             $result = mysqli_query($conn, $query);
                                             $order_count = 0;
                                             if($result && mysqli_num_rows($result) > 0) {
@@ -385,11 +381,7 @@
                                                             <span class="menu-text">Comfirm Orders
                                                             <?php
                                                                 $username = $_SESSION['helper_id'];
-                                                                $query = "SELECT order_detail.ord_helper_id AS helper,
-                                                                                order_detail.ord_status AS status,
-                                                                                SUM(order_detail.ord_quantity) AS total_order,
-                                                                                orders.ord_user_id AS user
-                                                                                FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_user_id = '$username' AND ord_status = '3'";
+                                                                $query = "SELECT *FROM order_detial WHERE ord_user_id = '$username' AND ord_status = '3'";
                                                                 $result = mysqli_query($conn, $query);
                                                                 $order_count = 0;
                                                                 if($result && mysqli_num_rows($result) > 0) {
