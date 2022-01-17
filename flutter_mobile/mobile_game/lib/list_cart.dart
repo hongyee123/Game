@@ -10,7 +10,7 @@ class ListCart extends StatefulWidget {
   final User user;
   final Cart cart;
   final Product product;
-  const ListCart({ Key? key, required this.user, required this.cart, required this.product}) : super(key: key);
+  const ListCart({ Key? key, required this.user, required this.cart, required this.product }) : super(key: key);
 
   @override
   _ListCartState createState() => _ListCartState();
@@ -36,7 +36,7 @@ class _ListCartState extends State<ListCart> {
                 ),
               ),
               Text(
-                "Helper    : RM${widget.product.username}",
+                "Helper    : ${widget.product.username}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

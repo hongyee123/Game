@@ -130,7 +130,7 @@ else {
                 <!--begin::Body-->
                 <div class="card-body">
                     <div class="row d-flex justify-content-between pl-3 pr-3">
-                        <h3><b>Comment   a</b></h3>
+                        <h3><b>Comment</b></h3>
                         <div class="card-toolbar d-flex justify-content-end">
                             <ul class="nav nav-pills nav-pills-sm nav-dark-75">
                                 <li class="nav-item">

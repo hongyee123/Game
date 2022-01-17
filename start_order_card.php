@@ -18,6 +18,7 @@ if(isset($_SESSION['helper_id'])){
 if(isset($_SESSION['username'])){
     $ex = "";
 }
+
 $order =  "";
 if(isset($_GET['p'])){
     if(($_GET['p'])==1){
@@ -26,6 +27,8 @@ if(isset($_GET['p'])){
     if(($_GET['p'])==2){
         $order = "ORDER BY price DESC";
     }
+}else{
+    $order =  "";
 }
 ?>
 <div class="row">

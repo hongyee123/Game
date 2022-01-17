@@ -73,7 +73,7 @@ if(!isset($_SESSION['admin'])){
                             <div class="d-flex align-items-center">
                                 <div class="d-flex flex-column">
                                     <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                    No Any Transaction History
+                                    No Any Report
                                     </a>
                                 </div>
                             </div>

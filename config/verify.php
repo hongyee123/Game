@@ -8,6 +8,6 @@ if(isset($_SESSION['username'])){
     include('../layout/helper_in.php');
     $_SESSION['helper_id'] = $username;
 }else{
-    header("Location: aindex.php");
+    header("Location: index.php");
 }
 ?>

@@ -27,6 +27,8 @@ $_SERVER['REQUEST_METHOD'] == "POST") {
 
 			$sql = "INSERT INTO report(ord_id, reason, description,evidence,status,report_time) VALUES ('$id','$select','$description','$file_name_save','1',now())";
 			$result = mysqli_query($conn, $sql);
+			$sql = "UPDATE `order_detail` SET `ord_status`='10' WHERE id='$id'";
+			$result = mysqli_query($conn, $sql);
 	
 	
 	

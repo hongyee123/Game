@@ -183,7 +183,7 @@ $helper_id = ($_SESSION['username']);
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label class="text-light font-weight-bold">Bank Name</label>
-                                                <select class="form-control form-control-lg" id="select">
+                                                <select class="form-control form-control-lg" id="bank_name">
                                                     <option disabled selected value="">Bank Name</option>
                                                     <option value="Maybank">Maybank</option>
                                                     <option value="RHB">RHB</option>

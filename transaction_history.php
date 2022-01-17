@@ -31,7 +31,6 @@ if(isset($_SESSION['username'])){
                 $sql = "SELECT * FROM transaction_history WHERE username = '$username'";
                 $result = mysqli_query($conn, $sql);
                 $total_row = mysqli_num_rows($result);
-               
 
                 $page_num = @$_GET['page'];
                 if($page_num == 0 || $page_num == 1) {
@@ -51,23 +50,24 @@ if(isset($_SESSION['username'])){
                             $row = mysqli_fetch_assoc($result);
                             ?>
                             <div class="mb-3 col-12">
-                                <div class="card card-custom wave wave-animate wave-<?php if($row['status'] == 1||$row['status'] == 3){echo"success";}elseif($row['status'] == 4||5){echo"warning";}else{echo"danger";}?> mb-2 mb-lg-0 ">
+                                <div class="card card-custom wave wave-animate wave-<?php if($row['status'] == 1|| $row['status'] == 3 || $row['status'] == 6){echo"success";}elseif($row['status'] == 4 || $row['status'] == 5){echo"warning";}else{echo"danger";}?> mb-2 mb-lg-0 ">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex flex-column ">
-                                                <a href="<?php if($row['status'] != 4){ echo "transaction_detail.php?tid="+$row['id'];}?>" class="text-dark text-hover-primary font-weight-bold font-size-h2 d-flex">
+                                                <a href="<?php if($row['status'] != 4){ echo "transaction_detail.php?tid="; echo$row['id'];}?>" class="text-dark text-hover-primary font-weight-bold font-size-h2 d-flex">
                                                     <?php   if($row['status'] == 1){ echo"Topup"; 
                                                             }else if($row['status'] == 2){ echo"Payment"; 
                                                             }else if($row['status'] == 3){ echo"Earn"; 
                                                             }else if($row['status'] == 4){ echo"Withdraw (Pending)"; 
                                                             }else if($row['status'] == 5){ echo"Withdraw"; 
+                                                            }else if($row['status'] == 6){ echo"Refund"; 
                                                             } 
                                                     ?>
                                                 </a>
-                                                <a class="text-dark"><?= $row['request_date'];?></a>
+                                                <a class="text-dark"><?= $row['transaction_date'];?></a>
                                             </div>
                                             <div class="flex-column">
-                                                <?php if($row['status'] == 1 || $row['status'] == 3){
+                                                <?php if($row['status'] == 1 || $row['status'] == 3 || $row['status'] == 6){
                                                     ?>
                                                     <a class="text-success font-weight-bold font-size-h2 mb-3">+<?= $row['amount'];?></a>
                                                     <?php

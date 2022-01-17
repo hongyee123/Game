@@ -163,13 +163,7 @@ else {
 										</thead>
 										<tbody>
 											<?php
-											$query = "SELECT order_detail.id AS detail_id,
-											order_detail.ord_type AS type,
-											order_detail.ord_status AS status,
-											order_detail.ord_quantity AS quantity,
-											order_detail.ord_price AS price,
-											orders.ord_user_id AS user
-											FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_helper_id = '$username' AND orders.ord_user_id = '$id' AND order_detail.ord_status = '1'";
+											$query = "SELECT * FROM order_detail WHERE ord_helper_id = '$username' AND ord_user_id = '$id' AND ord_status = '1'";
 			
 											$result = mysqli_query($conn, $query);
 							
@@ -182,26 +176,26 @@ else {
 														$row = mysqli_fetch_assoc($result);
 													
 											?>
-												<tr id="order-<?= $row['detail_id'] ?>">
+												<tr id="order-<?= $row['id'] ?>">
 												<td>
 												<div class="flex-shrink-0 mr-7">
 													<div class="symbol symbol-50 symbol-lg-60 symbol-light-danger">
-														<span class="font-size-h6 symbol-label font-weight-boldest"><?php echo $row['type'];?></span>
+														<span class="font-size-h6 symbol-label font-weight-boldest"><?php echo $row['ord_type'];?></span>
 													</div>
 												</div>
 												</td>
 												<td class="text-left">
-													<span class="text-muted font-weight-bold"><?php echo $row['type'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_type'];?></span>
 												</td>
 												<td class="text">
-													<span class="text-muted font-weight-bold"><?php echo $row['price'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_price'];?></span>
 												</td>
 												<td class="text">
-													<span class="text-muted font-weight-bold"><?php echo $row['status'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_status'];?></span>
 												</td>
 												<td>
 												<?php
-													if($row['status'] == 1){
+													if($row['ord_status'] == 1){
 														?>
 															<span class="label label-lg label-light-primary label-inline">
 																New Order
@@ -242,10 +236,10 @@ else {
 												</td>
 												<td>
 												<?php
-													if($row['status'] == 1){
+													if($row['ord_status'] == 1){
 														?>
-															<input class="btn btn-success btn-comfirm" type="button" value="Comfirm" data-detail_id="<?= $row['detail_id'] ?>">
-                        									<input class="btn btn-danger btn-cancel" type="button" value="Cancel" data-detail_id="<?= $row['detail_id'] ?>" data-user="<?= $row['user'] ?>">
+															<input class="btn btn-success btn-comfirm" type="button" value="Comfirm" data-detail_id="<?= $row['id'] ?>">
+                        									<input class="btn btn-danger btn-cancel" type="button" value="Cancel" data-detail_id="<?= $row['id'] ?>" data-user="<?= $row['ord_user_id'] ?>">
 														<?php
 													}
 													?>
@@ -284,14 +278,7 @@ else {
 										</thead>
 										<tbody>
 											<?php
-											$query = "SELECT order_detail.id AS detail_id,
-											order_detail.ord_type AS type,
-											order_detail.ord_status AS status,
-											order_detail.ord_quantity AS quantity,
-											order_detail.ord_price AS price,
-											orders.ord_user_id AS user
-											FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_helper_id = '$username' AND orders.ord_user_id = '$id' AND order_detail.ord_status = '2'";
-			
+											$query = "SELECT * FROM order_detail WHERE ord_helper_id = '$username' AND ord_user_id = '$id' AND ord_status = '2'";
 											$result = mysqli_query($conn, $query);
 							
 											if(!$result) 
@@ -303,30 +290,30 @@ else {
 														$row = mysqli_fetch_assoc($result);
 													
 											?>
-												<tr id="order-<?= $row['detail_id'] ?>">
+												<tr id="order-<?= $row['id'] ?>">
 												<td>
 												<div class="flex-shrink-0 mr-7">
 													<div class="symbol symbol-50 symbol-lg-60 symbol-light-danger">
-														<span class="font-size-h6 symbol-label font-weight-boldest"><?php echo $row['type'];?></span>
+														<span class="font-size-h6 symbol-label font-weight-boldest"><?php echo $row['ord_type'];?></span>
 													</div>
 												</div>
 												</td>
 												<td class="text-left">
-													<span class="text-muted font-weight-bold"><?php echo $row['type'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_type'];?></span>
 												</td>
 												<td class="text">
-													<span class="text-muted font-weight-bold"><?php echo $row['price'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_price'];?></span>
 												</td>
 												<td class="text">
-													<span class="text-muted font-weight-bold"><?php echo $row['status'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_status'];?></span>
 												</td>
 												<td>
-													<input class="btn btn-success btn-done" type="button" value="Comfirm" data-detail_id="<?= $row['detail_id'] ?>">
+													<input class="btn btn-success btn-done" type="button" value="Comfirm" data-detail_id="<?= $row['id'] ?>">
 												</td>
 												<?php
-													if($row['status'] == 1){
+													if($row['ord_status'] == 1){
 														?>
-															<input class="btn btn-success btn-done" type="button" value="Comfirm" data-detail_id="<?= $row['detail_id'] ?>">
+															<input class="btn btn-success btn-done" type="button" value="Comfirm" data-detail_id="<?= $row['id'] ?>">
 														<?php
 													}
 													?>
@@ -363,13 +350,7 @@ else {
 										</thead>
 										<tbody>
 											<?php
-											$query = "SELECT order_detail.id AS detail_id,
-											order_detail.ord_type AS type,
-											order_detail.ord_status AS status,
-											order_detail.ord_quantity AS quantity,
-											order_detail.ord_price AS price,
-											orders.ord_user_id AS user
-											FROM orders LEFT JOIN order_detail ON orders.id = order_detail.id WHERE ord_helper_id = '$username' AND orders.ord_user_id = '$id' AND order_detail.ord_status = '3'";
+											$query = "SELECT * FROM order_detail WHERE ord_helper_id = '$username' AND ord_user_id = '$id' AND ord_status = '3'";
 			
 											$result = mysqli_query($conn, $query);
 							
@@ -387,29 +368,29 @@ else {
 												<td>
 												<div class="flex-shrink-0 mr-7">
 													<div class="symbol symbol-50 symbol-lg-60 symbol-light-danger">
-														<span class="font-size-h6 symbol-label font-weight-boldest"><?php echo $row['type'];?></span>
+														<span class="font-size-h6 symbol-label font-weight-boldest"><?php echo $row['ord_type'];?></span>
 													</div>
 												</div>
 												</td>
 												<td class="text-left">
-													<span class="text-muted font-weight-bold"><?php echo $row['type'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_type'];?></span>
 												</td>
 												<td class="text">
-													<span class="text-muted font-weight-bold"><?php echo $row['price'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_price'];?></span>
 												</td>
 												<td class="text">
-													<span class="text-muted font-weight-bold"><?php echo $row['quantity'];?></span>
+													<span class="text-muted font-weight-bold"><?php echo $row['ord_quantity'];?></span>
 												</td>
 												<td>
 												<?php
-													if($row['status'] == 3){
+													if($row['ord_status'] == 3){
 														?>
 															<span class="label label-lg label-light-secondary label-inline text-dark">
 																Waiting for user comfirm
 															</span>
 														<?php
 													}
-													if($row['status'] == 4){
+													if($row['ord_status'] == 4){
 														?>
 															<span class="label label-lg label-light-success label-inline">
 																Done
@@ -456,11 +437,13 @@ else {
 <script>
 $('.btn-comfirm').on('click', function() {
 	var detail_id = $(this).data('detail_id');
+	var accept = 'accept';
 	$.ajax({
-		url: 'process/helper_accept_order_function.php',
+		url: 'process/order_functions.php',
 		type: 'POST',
 		data: {
 			detail_id : detail_id,
+			accept : accept,
 		},
 		success: function(data) {
 			var order_card = $('#order-'+ detail_id).remove();
@@ -491,6 +474,7 @@ $('.btn-comfirm').on('click', function() {
 $('.btn-cancel').on('click', function() {
 	var detail_id = $(this).data('detail_id');
 	var user = $(this).data('user');
+	var cancel = 'cancel';
 	swal({
 		icon: "warning",
 		title: "Comfirm Detele",
@@ -502,11 +486,12 @@ $('.btn-cancel').on('click', function() {
 		if(confirmDelete){
 			//comfirmed delete
 			$.ajax({
-				url: 'process/helper_cancel_order_function.php',
+				url: 'process/order_functions.php',
 				type: 'POST',
 				data: {
 					detail_id : detail_id,
 					user : user,
+					cancel : cancel,
 				},success: function(){
 					var order_card = $('#order-'+ detail_id).remove();
 					console.log(order_card);
@@ -526,6 +511,7 @@ $('.btn-cancel').on('click', function() {
 $('.btn-done').on('click', function() {
         var detail_id = $(this).data('detail_id');
         var user_id = $(this).data('user_id');
+		var done = 'done';
         swal({
             icon: "warning",
             title: "Comfirm Done Order",
@@ -537,11 +523,12 @@ $('.btn-done').on('click', function() {
         .then((confirmDelete) => {
             if(confirmDelete){
                 $.ajax({
-                    url: 'process/helper_done_order_function.php',
+                    url: 'process/order_functions.php',
                     type: 'POST',
                     data: {
                         detail_id : detail_id,
                         user_id : user_id,
+						done : done,
                     },success: function(){
                         var order_card = $('#order-'+ detail_id).remove();
                         console.log(order_card);

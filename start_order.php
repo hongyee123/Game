@@ -89,7 +89,7 @@ function filter(){
         return;
         // 0 1 0
     }else if(category != "" && keyword == "" && price != ""){
-        xhttp.open("GET", "start_order_card.php?k="+keyword, true);
+        xhttp.open("GET", "start_order_card.php?c="+category+"&p="+price, true);
         xhttp.send();
         return;
         //1 0 0
@@ -110,6 +110,10 @@ function filter(){
         //1 0 1
     }else if(category != "" && keyword == "" && price != ""){
         xhttp.open("GET", "start_order_card.php?p="+price+"&c="+category, true);
+        xhttp.send();
+        return;
+    }else if(category == "" && keyword != "" && price == ""){
+        xhttp.open("GET", "start_order_card.php?k="+keyword, true);
         xhttp.send();
         return;
     }else{

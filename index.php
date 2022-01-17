@@ -93,12 +93,6 @@ if(isset($_SESSION['username'])){
 			</div>
 			<?php
 				}
-			}else{
-			?>
-			<div class="col-md-12">
-				<p class="text-center my-4 text-light" style="font-size: 35px">Add Notice Now !</p>
-			</div>
-			<?php
 			}
 			?>
 		</div>

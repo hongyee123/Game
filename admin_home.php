@@ -159,7 +159,7 @@ if(!isset($_SESSION['admin'])){
 													}
 													?>
 												</div>
-												<p>Top-up</p>
+												<p>Profit</p>
 											</div>
 										</div>
 										<div class="col-3 ">

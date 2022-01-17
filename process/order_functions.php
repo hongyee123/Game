@@ -28,6 +28,7 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['place']))) {
 	quantity,
 	product_detail.username AS seller_id
 	FROM cart LEFT JOIN product_detail ON cart.cart_product = product_detail.id WHERE cart_username = '$username'";
+
 	$cart_result = mysqli_query($conn, $query);
 	if($cart_result) {
 		$cart_num_row = mysqli_num_rows($cart_result);
@@ -52,7 +53,7 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['place']))) {
 						VALUES 
 						('$order_id','$product_id', '$username',  '$seller_id', '$product_name', '$product_quantity', '$product_price', '$ord_discount', '1')";
 				$query2 = "DELETE FROM cart WHERE id = $cart_id";
-				$query3 = "INSERT INTO transaction_history(username,order_id, amount,date,status) VALUES ('$username','$order_id', '$product_price', NOW(),'2')";
+				$query3 = "INSERT INTO transaction_history(username,order_id, amount,transaction_date,status) VALUES ('$username','$order_id', '$product_price', NOW(),'2')";
 				$query4 = "UPDATE `user` SET `credits`= '$credits_after' WHERE username = '$username'";
 				$result1 = mysqli_query($conn, $query1);
 				$result2 = mysqli_query($conn, $query2);

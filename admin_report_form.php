@@ -19,6 +19,8 @@ if(isset($_GET['rid'])){
     $sql = "SELECT * FROM report LEFT JOIN order_detail ON report.ord_id = order_detail.id WHERE ord_id ='$id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($result);
+    $user = $row['ord_user_id'];
+    $price = $row['ord_price'];
 }
 
 ?>
@@ -94,7 +96,10 @@ if(isset($_GET['rid'])){
 $('.btn_approve').on('click', function() {
     var id = "<?= $id ?>";
     var admin = "<?= $username ?>";
+    var user = "<?= $row['ord_user_id'] ?>";
+    var price = "<?= $row['ord_price'] ?>";
     var approve ='approve';
+
     swal({
         icon: "warning",
         title: "Comfirm Approve",
@@ -111,6 +116,8 @@ $('.btn_approve').on('click', function() {
                 data: {
                     id : id,
                     admin : admin,
+                    user : user,
+                    price : price,
                     approve : approve,
                 },success: function(data){
                     if(data.status == 0) {
@@ -142,7 +149,7 @@ $('.btn_approve').on('click', function() {
 $('.btn_reject').on('click', function() {
     var id = "<?= $id ?>";
     var admin = "<?= $username ?>";
-    var reject ='';
+    var reject ='reject';
     swal({
         icon: "warning",
         title: "Comfirm Reject",

@@ -60,9 +60,9 @@ if($result){
                                 <tbody>
                                     <tr class="font-weight-boldest">
                                         <td class="pl-0 pt-7"><?= $row['ord_type'] ?></td>
-                                        <td class="text-right pt-7">RM<?= $row['ord_price'] ?></td>
+                                        <td class="text-right pt-7">RM<?= $row['ord_price']/$row['ord_quantity'] ?></td>
                                         <td class="text-right pt-7"><?= $row['ord_quantity'] ?></td>
-                                        <td class="text-danger pr-0 pt-7 text-right">RM<?= $row['ord_quantity']*$row['ord_price'] ?></td>
+                                        <td class="text-danger pr-0 pt-7 text-right">RM<?=$row['ord_price'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -148,9 +148,10 @@ $(document).ready(function() {
                         text: result.msg,
                         timer: 2500,
                         buttons: false,
-                    });
-                    if(result.cart_num == 0)
-                        window.location.assign('<?= $_SERVER['PHP_SELF'] ?>');
+                    }).then(function(){
+                window.location.assign('comfirm_order.php');
+                });
+                    
                 }
                 if(result.status == 2) {
                     swal({

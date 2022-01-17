@@ -7,6 +7,7 @@ import 'package:mobile_game/model/product.dart';
 import 'package:mobile_game/model/user.dart';
 import 'package:mobile_game/model/cart.dart';
 import 'package:mobile_game/NavBar.dart';
+import 'package:mobile_game/place_order.dart';
 
 class ViewCart extends StatefulWidget {
   final User user;
@@ -33,7 +34,7 @@ class _ViewCartState extends State<ViewCart> {
 
   }
 
-  Future<void> getCartData() async {
+  Future<int> getCartData() async {
     List<Cart> cartData = await cartController.fetchCart(widget.user);
 
     setState(() {
@@ -45,11 +46,13 @@ class _ViewCartState extends State<ViewCart> {
     }
 
     print('Item : ${SubTotalItem}');
+
+    return SubTotalItem;
   }
 
 
 
-  Future<void> getCartPrice() async {
+  Future<int> getCartPrice() async {
     List<Cart> cartData = await cartController.fetchCart(widget.user);
 
     setState(() {
@@ -61,6 +64,8 @@ class _ViewCartState extends State<ViewCart> {
     }
 
     print('Price : ${SubTotalPrice}');
+
+    return SubTotalPrice;
   }
 
 
@@ -98,20 +103,7 @@ class _ViewCartState extends State<ViewCart> {
             primary: Colors.black,
           ), 
           onPressed: () async {
-            // var status = await productController.addCart(widget.user.username, widget.product.id, _counter);
-            // print("status $status");
-            // status == 0
-          //   ? Fluttertoast.showToast(
-          //     msg : "Add to cart Succssful !",
-          //     toastLength: Toast.LENGTH_SHORT,
-          //     gravity: ToastGravity.CENTER,
-          //     fontSize: 16,
-          //   ) : Fluttertoast.showToast(
-          //     msg : "Something went wrong",
-          //     toastLength: Toast.LENGTH_SHORT,
-          //     gravity: ToastGravity.CENTER,
-          //     fontSize: 16,
-          //   );
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PlaceOrder(user: widget.user, product:widget.product, subTotalItem: SubTotalItem, subTotalPrice: SubTotalPrice,)));
           },
           child: Text('Check Out'),
         ),

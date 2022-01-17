@@ -2,11 +2,6 @@
 require_once '../config/config.php';
 
 if(isset($_POST['amount_topup']) ){
-    
-
-
-
-
     if(isset($_SESSION['username'])){{
       $username = $_SESSION['username'];
       $sql = "SELECT credits FROM user where username ='$username'";
@@ -46,4 +41,5 @@ if(isset($_POST['amount_topup']) ){
 }else{
   echo false;
 }
+echo "no";
 ?>

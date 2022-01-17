@@ -70,7 +70,7 @@ if(isset($_SESSION['username'])){
                         $out_set = ($page_num * 5) - 5;
                     }
 
-                    $query = "SELECT * FROM order_detail WHERE ord_user_id = '$username' AND ord_status = '1'";
+                    $query = "SELECT * FROM order_detail WHERE ord_user_id = '$username'";
 
                     if(isset($_GET['type'])) {
                         $category = $_GET['type'];
@@ -124,6 +124,24 @@ if(isset($_SESSION['username'])){
                             ?>
                                 <span class="label label-inline label-light-danger font-weight-bold">
                                     Cancelled
+                                </span>
+                            <?php
+                        }elseif($row['ord_status'] == 10){
+                            ?>
+                                <span class="label label-inline label-light-danger font-weight-bold">
+                                    Waiting Admin To verify the report
+                                </span>
+                            <?php
+                        }elseif($row['ord_status'] == 11){
+                            ?>
+                                <span class="label label-inline label-light-success font-weight-bold">
+                                    Reported Successfully, Credits Refunded
+                                </span>
+                            <?php
+                        }elseif($row['ord_status'] == 12){
+                            ?>
+                                <span class="label label-inline label-light-danger font-weight-bold">
+                                    Report Fail
                                 </span>
                             <?php
                         }else{

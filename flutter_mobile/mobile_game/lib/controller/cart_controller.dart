@@ -22,4 +22,12 @@ class CartController {
 
     return list;
   }
+
+  // Future<void> checkOut() async {
+  //   dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/show_cart.php"), 
+  //     body: {
+  //       'username': user.username,
+  //     }
+  //   );
+  // }
 }

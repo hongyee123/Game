@@ -141,7 +141,7 @@ else {
 							</div>
 							<span class="font-weight-bolder text-dark"><?php echo round($result_rate);?>%</span>
 							<?php
-										}
+								}
 							?>
 						</div>
 					</div>

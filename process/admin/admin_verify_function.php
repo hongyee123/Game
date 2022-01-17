@@ -13,6 +13,8 @@ $_SERVER['REQUEST_METHOD'] == "POST") {
 	//reset order number
 	$sql = "UPDATE helper SET status = ('2'),admin_id = '$username' WHERE helper_id = '$helper_id'";
 	$result = mysqli_query($conn, $sql);
+	$sql2 = "UPDATE user SET status = ('2') WHERE helper_id = '$helper_id'";
+	$result2 = mysqli_query($conn, $sql2);
 
 
 

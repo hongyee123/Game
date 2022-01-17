@@ -60,7 +60,7 @@ require_once('../config/verify.php');
                     $out_set = ($page_num * 5) - 5;
                 }
 
-                $query = "SELECT * FROM order_detail WHERE ord_user_id = '$username'";
+                $query = "SELECT * FROM order_detail WHERE ord_helper_id = '$username'";
 
                 if(isset($_GET['type'])) {
                     $category = $_GET['type'];
@@ -113,6 +113,25 @@ require_once('../config/verify.php');
                             ?>
                                 <span class="label label-inline label-light-danger font-weight-bold">
                                     Cancelled
+                                </span>
+                            <?php
+                        }elseif($row['ord_status'] == 10){
+                            ?>
+                                <span class="label label-inline label-light-danger font-weight-bold">
+                                    User Report This order
+                                </span>
+                            <?php
+                        }
+                        elseif($row['ord_status'] == 11){
+                            ?>
+                                <span class="label label-inline label-light-danger font-weight-bold">
+                                    User Report Success
+                                </span>
+                            <?php
+                        }elseif($row['ord_status'] == 12){
+                            ?>
+                                <span class="label label-inline label-light-danger font-weight-bold">
+                                    User Report Fail
                                 </span>
                             <?php
                         }else{

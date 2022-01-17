@@ -52,7 +52,7 @@ if(isset($_SESSION['username'])){
                                             <div class="d-flex flex-column">
                                                 <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h2 mb-3"><?= $row['favourite_helper'];?></a>
                                                 <div class="col-12">
-                                                    <a href="helper_information.php?pid=<?= $row['favourite_helper']; ?>" class="btn btn-primary mt-3">View</a>
+                                                    <a href="helper/helper_information.php?pid=<?= $row['favourite_helper']; ?>" class="btn btn-primary mt-3">View</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -83,5 +83,4 @@ if(isset($_SESSION['username'])){
             </div>
         </div>
     </div>
-    
 </div>
