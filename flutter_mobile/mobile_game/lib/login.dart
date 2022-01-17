@@ -42,6 +42,7 @@ class _LoginState extends State<Login> {
           fontSize: 16,
         );
       }else{
+        print('ok');
         User u = new User(
           username: datauser[0]['username'], 
           password: datauser[0]['password'], 
@@ -53,7 +54,9 @@ class _LoginState extends State<Login> {
           status: datauser[0]['status'], 
           role: datauser[0]['role']);
         if(user.text == u.username && pass.text == u.password){
-          if(datauser[0]['role']=='1'){
+          print('ok2');
+          if(datauser[0]['role']=='0'){
+            
             Navigator.push(cont, MaterialPageRoute(builder: (context) => Home(user: u,))); 
             Fluttertoast.showToast(
               msg : "Hello User",

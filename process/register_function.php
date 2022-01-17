@@ -29,7 +29,7 @@ unset($_SESSION['success']);
 	}else{
 
 
-		$sql = "INSERT INTO user(`username`, `password`, `contact`, `email`, `status`) VALUES ('$username',md5('$password'),'$contact','$email','1');";
+		$sql = "INSERT INTO user(`username`, `password`, `contact`, `email`, `status`,`role`) VALUES ('$username',md5('$password'),'$contact','$email','1','1');";
 			$sql .= "INSERT INTO credits(username) VALUES ('$username');";
 			if (mysqli_multi_query($conn,$sql)){
 				do{// Store first result set
