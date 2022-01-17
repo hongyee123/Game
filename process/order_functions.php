@@ -217,21 +217,23 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['comfirm']))) {
 
 			$total = $ord_price - $ord_discount;
 
-			$sql = "SELECT * FROM user WHERE username = 'helper'";
+			$sql = "SELECT * FROM user WHERE username = '$helper'";
 			$result = mysqli_query($conn, $sql);
 			if($result){
 				$helper_ = mysqli_fetch_assoc($result);
 
 				$credits = $helper_['credits'];
-				$new_credits = ($credits + $total)/100*80;
+				$new_credits = ($credits +($total/100*80));
+				$earn = $total/100*80;
+
 				$sql = "UPDATE order_detail SET ord_status = ('4') WHERE id = '$detail_id'";
 				$result = mysqli_query($conn, $sql);
-				$sql2 = "INSERT INTO `transaction_history`(`order_id`, `username`, `amount`, `transaction_date`, `status`) VALUES ('$detail_id','$helper','$new_credits',now(),'3')";
+				$sql2 = "INSERT INTO `transaction_history`(`order_id`, `username`, `amount`, `transaction_date`, `status`) VALUES ('$detail_id','$helper','$earn',now(),'3')";
 				$result2 = mysqli_query($conn, $sql2);
 				$sql3 = "UPDATE user SET credits = '$new_credits' WHERE username = '$helper'";
 				$result3 = mysqli_query($conn, $sql3);
 
-				if($result) {
+				if($result3) {
 					$output['status'] = 0;
 				}else{
 					$output['status'] = 2;

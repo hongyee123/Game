@@ -163,7 +163,7 @@ if(isset($_SESSION['username'])){
                 } // end for
                 if($total_row>($page_num*10)){
                     ?>
-                    <a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page_num-1) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
+                    <a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page_num+1) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
                     <?php
                 }
                 ?><a href="<?= $_SERVER['PHP_SELF'] .'?page='. ($page) ?>" class="btn btn-icon btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
