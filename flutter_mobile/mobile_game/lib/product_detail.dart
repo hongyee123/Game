@@ -148,22 +148,6 @@ class _DetailPageState extends State<DetailPage> {
                         child: new Text("+"), 
                         onPressed: _incrementCounter,
                       ),
-                      
-
-
-
-
-
-
-                      ElevatedButton(
-                        onPressed: () => setState(() => _flag = !_flag),
-                        child: Text(_flag ? 'Red' : 'Green'),
-                        style: ElevatedButton.styleFrom(
-                          primary: _flag ? Colors.red : Colors.teal, // This is what you need!
-                        ),
-                      ),
-
-
                     ],)
                   ],
                 ),

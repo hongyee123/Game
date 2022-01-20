@@ -3,17 +3,15 @@ include 'config.php';
 
 header("Access-Control-Allow-Origin: *");
 
+// $username = $_POST['username'];
+// $password = $_POST['password'];
+// $password2 = md5($password);
+
 $username = $_POST['username'];
 $password = $_POST['password'];
-// $password = md5($_POST['password']);
+$password2 = md5($password);
 
-// $username = '1';
-// $password = '1';
-
-$queryResult = $conn->query("SELECT * FROM user WHERE username='".$username."' and password='".$password.  "'");
-
-// $queryResult = $conn->query("SELECT * FROM user WHERE username='$username' and password='$password'");
-
+$queryResult = $conn->query("SELECT * FROM user WHERE username='".$username."' and password='".$password2.  "'");
 
 $result=array();
 

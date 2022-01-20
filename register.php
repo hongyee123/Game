@@ -79,9 +79,9 @@ if(empty($_SESSION['username'])) {
         </div>
     </main>
 <script type="text/javascript">
-		$("#image").change(function() {
-			readURL(this);
-		});
-	</script>
+    $("#image").change(function() {
+        readURL(this);
+    });
+</script>
 </body>
 </html>

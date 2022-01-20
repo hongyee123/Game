@@ -28,7 +28,7 @@ class _ListCartState extends State<ListCart> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(top:10, bottom: 20),
-                child: Text(widget.product.type,
+                child: Text(widget.cart.type,
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -36,13 +36,13 @@ class _ListCartState extends State<ListCart> {
                 ),
               ),
               Text(
-                "Helper    : ${widget.product.username}",
+                "Helper    : ${widget.cart.username}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                "Price       : RM${widget.product.price} / per game",
+                "Price       : RM${widget.cart.cart_price} / per game",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

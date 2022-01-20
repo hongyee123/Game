@@ -8,7 +8,8 @@ import 'package:mobile_game/NavBar.dart';
 class StartOrder extends StatefulWidget {
 
   final User user;
-  const StartOrder({ Key? key, required this.user}) : super(key: key);
+  final Product product;
+  const StartOrder({ Key? key, required this.user, required this.product}) : super(key: key);
 
   @override
   _StartOrderState createState() => _StartOrderState();
@@ -23,7 +24,7 @@ class _StartOrderState extends State<StartOrder> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      drawer: NavBar(user: widget.user),
+      drawer: NavBar(user: widget.user, product: widget.product,),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('Start Order'),

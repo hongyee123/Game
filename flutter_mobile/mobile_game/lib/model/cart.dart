@@ -1,30 +1,30 @@
 class Cart {
-  String id;
-  String cart_username;
-  String cart_product;
+  String type;
+  String cart_price;
   String cart_quantity;
+  String username;
   
 
   Cart(
-      {required this.id,
-      required this.cart_username,
-      required this.cart_product,
-      required this.cart_quantity
+      {required this.type,
+      required this.cart_price,
+      required this.cart_quantity,
+      required this.username
       });
 
   Cart.fromJson(Map<String, dynamic> json) 
-    :id = json['id'],
-    cart_username = json['cart_username'],
-    cart_product = json['cart_product'],
-    cart_quantity = json['cart_quantity'];
+    :type = json['type'],
+    cart_price = json['price'],
+    cart_quantity = json['cart_quantity'],
+    username = json['username'];
   
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['cart_username'] = this.cart_username;
-    data['cart_product'] = this.cart_product;
+    data['type'] = this.type;
+    data['price'] = this.cart_price;
     data['cart_quantity'] = this.cart_quantity;
+    data['username'] = this.username;
     return data;
   }
 }

@@ -60,7 +60,7 @@ class _ViewCartState extends State<ViewCart> {
     });
 
     for(int i=0; i < cartData.length; i++){
-      SubTotalPrice += int.parse(cartData[i].cart_quantity)*int.parse(widget.product.price);
+      SubTotalPrice += int.parse(cartData[i].cart_quantity)*int.parse(cartData[i].cart_price);
     }
 
     print('Price : ${SubTotalPrice}');
@@ -73,7 +73,7 @@ class _ViewCartState extends State<ViewCart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(user: widget.user),
+      drawer: NavBar(user: widget.user, product: widget.product,),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('View Cart'),
@@ -96,8 +96,6 @@ class _ViewCartState extends State<ViewCart> {
         }
       ),
       floatingActionButton: ElevatedButton(
-          // onPressed: onPressed, 
-          // child: child,
           style: ElevatedButton.styleFrom(
             minimumSize: Size(360, 60),
             primary: Colors.black,

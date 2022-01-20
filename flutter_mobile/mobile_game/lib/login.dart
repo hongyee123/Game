@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_game/controller/product_controller.dart';
+import 'package:mobile_game/model/product.dart';
 import 'package:mobile_game/model/user.dart';
 import 'package:mobile_game/home.dart';
 import 'package:mobile_game/main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:crypto/crypto.dart';
 
 
 class Login extends StatefulWidget {
@@ -19,93 +23,117 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  
   TextEditingController user=new TextEditingController();
   TextEditingController pass=new TextEditingController();
 
+  ProductController productController = new ProductController();
+
   String msg='';
+  Product p = new Product(id: "", username: "", type: "", price: "", quantity: "", available: "", description: "");
 
     _login(BuildContext cont) async {
-      dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/login_function.php"), 
-      body: {
-        'username': user.text,
-        'password': pass.text,
-      }
-    );
+        dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/login_function.php"), 
+        body: {
+          'username': user.text,
+          'password': pass.text,
+        }
+      );
+      
     
-    var datauser = json.decode(response.body);
-    if(user.text!=''&&pass.text!=''){
-      if(datauser.length==0){
+      var datauser = json.decode(response.body);
+      
+      if(user.text!=''&& pass.text!=''){
+        
+        if(datauser.length==0){
+          
+          Fluttertoast.showToast(
+            msg : "Account Invalid",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            fontSize: 16,
+          );
+        }else{
+          print(datauser);
+          
+          User u = new User(
+            username: datauser[0]['username'], 
+            password: datauser[0]['password'], 
+            credits: datauser[0]['credits'], 
+            contact: datauser[0]['contact'], 
+            email: datauser[0]['email'], 
+            facebook: datauser[0]['facebook'], 
+            profilePic: datauser[0]['profile_pic'] ?? '', 
+            status: datauser[0]['status'], 
+            role: datauser[0]['role']
+          );
+
+          List<Product> listProd = await productController.fetchProduct(u);
+          listProd.forEach((e) {
+            p = new Product(
+              id: e.id, 
+              username: e.username, 
+              type: e.type, 
+              price: e.price, 
+              quantity: e.quantity, 
+              available: e.available, 
+              description: e.description
+            );
+          });
+
+          String generateMd5(String input) {
+            return md5.convert(utf8.encode(input)).toString();
+          }
+          if(user.text == u.username && generateMd5(pass.text) == u.password){
+            
+            if(datauser[0]['role']=='1'){
+              Navigator.push(cont, MaterialPageRoute(builder: (context) => Home(user: u, product: p))); 
+              Fluttertoast.showToast(
+                msg : "Hello User",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                fontSize: 16,
+              );
+            }else if(datauser[0]['role']=='2'){
+              Fluttertoast.showToast(
+                msg : "Hello Helper",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                fontSize: 16,
+              );
+            }
+          }else{
+            Fluttertoast.showToast(
+                msg : "Wrong Password",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                fontSize: 16,
+              );
+          }
+        }
+      }else if (user.text==''&&pass.text!=''){
         Fluttertoast.showToast(
-          msg : "Account Invalid",
+          msg : "Please fill in your Username",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16,
+        );
+      }else if (user.text!=''&&pass.text==''){
+        Fluttertoast.showToast(
+          msg : "Please fill in your Password",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           fontSize: 16,
         );
       }else{
-        print('ok');
-        User u = new User(
-          username: datauser[0]['username'], 
-          password: datauser[0]['password'], 
-          credits: datauser[0]['credits'], 
-          contact: datauser[0]['contact'], 
-          email: datauser[0]['email'], 
-          facebook: datauser[0]['facebook'], 
-          profilePic: datauser[0]['profile_pic'] ?? '', 
-          status: datauser[0]['status'], 
-          role: datauser[0]['role']);
-        if(user.text == u.username && pass.text == u.password){
-          print('ok2');
-          if(datauser[0]['role']=='0'){
-            
-            Navigator.push(cont, MaterialPageRoute(builder: (context) => Home(user: u,))); 
-            Fluttertoast.showToast(
-              msg : "Hello User",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              fontSize: 16,
-            );
-          }else if(datauser[0]['role']=='2'){
-            Fluttertoast.showToast(
-              msg : "Hello Helper",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              fontSize: 16,
-            );
-          }
-        }
-        
-        else{
-          Fluttertoast.showToast(
-              msg : "Wrong Password",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              fontSize: 16,
-            );
-        }
+        Fluttertoast.showToast(
+          msg : "Please fill in your Information",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          fontSize: 16,
+        );
       }
-    }else if (user.text==''&&pass.text!=''){
-      Fluttertoast.showToast(
-        msg : "Please fill in your Username",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        fontSize: 16,
-      );
-    }else if (user.text!=''&&pass.text==''){
-      Fluttertoast.showToast(
-        msg : "Please fill in your Password",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        fontSize: 16,
-      );
-    }else{
-      Fluttertoast.showToast(
-        msg : "Please fill in your Information",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        fontSize: 16,
-      );
     }
-  }
   bool isVisible = true;
 
   @override

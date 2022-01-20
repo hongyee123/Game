@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 
 $username = $_POST['username'];
 
-$queryResult = $conn->query("SELECT type,price,cart_quantity,username FROM cart LEFT JOIN product_detail on cart.cart_product = product_detail.id WHERE cart_username='$username'");
+$queryResult = $conn->query("SELECT * FROM favourite WHERE favourite_user='$username'");
 
 
 $result=array();
