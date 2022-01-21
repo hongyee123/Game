@@ -9,7 +9,7 @@ import 'package:mobile_game/model/user.dart';
 
 class OrderController {
   Future<List<Order>> fetchOrder(Product p) async {
-    dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/show_order.php"), 
+    dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/show_order.php"), 
       body: {
         'username': p.username,
         'type': p.type
@@ -26,7 +26,7 @@ class OrderController {
   }
 
   Future<List<Detail>> fetchOrderDetail(User u) async {
-    dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/show_detail.php"), 
+    dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/show_detail.php"), 
       body: {
         'username': u.username
       }

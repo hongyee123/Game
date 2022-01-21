@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
   Product p = new Product(id: "", username: "", type: "", price: "", quantity: "", available: "", description: "");
 
     _login(BuildContext cont) async {
-        dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/login_function.php"), 
+        dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/login_function.php"), 
         body: {
           'username': user.text,
           'password': pass.text,

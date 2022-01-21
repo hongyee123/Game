@@ -8,7 +8,7 @@ import 'package:mobile_game/model/user.dart';
 
 class CartController {
   Future<List<Cart>> fetchCart(User user) async {
-    dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/show_cart.php"), 
+    dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/show_cart.php"), 
       body: {
         'username': user.username,
       }
@@ -24,7 +24,7 @@ class CartController {
   }
 
   // Future<void> checkOut() async {
-  //   dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/show_cart.php"), 
+  //   dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/show_cart.php"), 
   //     body: {
   //       'username': user.username,
   //     }

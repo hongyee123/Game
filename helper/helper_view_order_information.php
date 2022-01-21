@@ -90,7 +90,7 @@ require_once('../config/verify.php');
                                 }else{
                             ?> 
                                 <div class="col-md-12">
-                                    <p class="text-center my-4" style="font-size: 35px">No Product</p>
+                                    <p class="text-center my-4" style="font-size: 35px; color:#fff;">No Product</p>
                                 </div>
                             <?php
                                 }

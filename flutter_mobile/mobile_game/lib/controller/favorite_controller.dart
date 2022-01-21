@@ -9,7 +9,7 @@ import 'package:mobile_game/model/user.dart';
 
 class FavoriteController {
   Future<List<Favorite>> fetchFavorite(User user) async {
-    dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/show_favorite.php"), 
+    dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/show_favorite.php"), 
       body: {
         'username': user.username
       }
@@ -25,7 +25,7 @@ class FavoriteController {
   }
 
   Future<int> addFavorite(String username, String helper) async {
-    dynamic response = await http.post(Uri.parse("http://192.168.0.144/Game/flutter_mobile/mobile_game/php_process/add_favorite.php"), 
+    dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/add_favorite.php"), 
       body: {
         'username': username,
         'helper': helper,

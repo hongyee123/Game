@@ -46,7 +46,7 @@ class _NavBarState extends State<NavBar> {
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
-                  'http://192.168.0.144/Game/${widget.user.profilePic}',
+                  'http://192.168.0.190/Game/${widget.user.profilePic}',
                   width: 90,
                   height: 90,
                   fit: BoxFit.cover,

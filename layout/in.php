@@ -441,7 +441,13 @@
             <!--begin::Header-->
             <div class="d-flex align-items-center mt-5">
                 <div class="symbol symbol-100 mr-5">
-                    <div class="symbol-label" style="background-image:url('assets/media/users/user.png')"></div>
+                <?php 
+                $sql_pic = "SELECT profile_pic FROM user WHERE username = '$username'";
+                $result = mysqli_query($conn, $sql_pic);
+                $pic = mysqli_fetch_assoc($result);
+                
+                ?>
+                    <div class="symbol-label" style="background-image:url('<?=$pic['profile_pic'];?>')"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div class="d-flex flex-column">

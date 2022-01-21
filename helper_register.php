@@ -188,8 +188,9 @@ $helper_id = ($_SESSION['username']);
                                                     <option value="Maybank">Maybank</option>
                                                     <option value="RHB">RHB</option>
                                                     <option value="CIMB">CIMB</option>
-                                                    <option value="CIMB">CIMB</option>
-                                                    <option value="CIMB">CIMB</option>
+                                                    <option value="Alliance">Alliance</option>
+                                                    <option value="Hong Leong">Hong Leong</option>
+                                                    <option value="AmBank">AmBank</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-6">

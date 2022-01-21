@@ -118,30 +118,38 @@ else {
 								$rate = mysqli_fetch_assoc($result);
 								$sql = "SELECT ord_rate FROM order_detail WHERE ord_helper_id = '$id' AND ord_rate != '0'";
 								$result = mysqli_query($conn, $sql);
-									for ($x = 1; $x <= mysqli_num_rows($result); $x++) {
-									}
+								for ($x = 1; $x <= mysqli_num_rows($result); $x++) {
+								}
+								$num_row = mysqli_num_rows($result);
+								if($num_row>0){
 									$result_rate = ((($rate['SUM(ord_rate)'])*20)/($x-1));
-								?>
-
-								<?php
-								if(($result_rate) < 30){
-									?>
-									<div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $result_rate;?>%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-									<?php
-								}elseif($result_rate < 70){
-									?>
-									<div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $result_rate;?>%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-									<?php
-								}elseif($result_rate >= 70){
-									?>
-									<div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $result_rate;?>%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-									<?php
+									if(($result_rate) < 30){
+										?>
+										<div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $result_rate;?>%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+										<?php
+									}elseif($result_rate < 70){
+										?>
+										<div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $result_rate;?>%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+										<?php
+									}elseif($result_rate >= 70){
+										?>
+										<div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $result_rate;?>%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+										<?php
+									}
 								}
 								?>
 							</div>
-							<span class="font-weight-bolder text-dark"><?php echo round($result_rate);?>%</span>
-							<?php
+								<?php
+								if($num_row>0){
+									?>
+									<span class="font-weight-bolder text-dark"><?php echo round($result_rate);?>%</span>
+									<?php
+								}else{
+									?>
+									<h6 class="text-dark d-flex justify-content-center">No rating yet</h6>
+									<?php
 								}
+							}
 							?>
 						</div>
 					</div>

@@ -38,7 +38,7 @@ echo $bootstrapCSS; echo $jQueryJS;echo $jQueryFormJS;echo $sweetAlert; echo $bo
                         $out_set = ($page_num * 5) - 5;
                     }
                     $query = "SELECT user.status AS user_status
-							FROM helper left join user on helper.helper_id = user.username WHERE .user.status = '1'LIMIT $out_set, 5";
+							FROM helper left join user on helper.helper_id = user.username WHERE .helper.status = '1'LIMIT $out_set, 5";
                     $result = mysqli_query($conn, $query);
                     if($result) {
                         $sub_total = 0;
@@ -51,7 +51,7 @@ echo $bootstrapCSS; echo $jQueryJS;echo $jQueryFormJS;echo $sweetAlert; echo $bo
 											helper.name AS name,
 											helper.ic AS ic,
 											helper.address1 AS address
-											FROM helper left join user on helper.helper_id = user.username WHERE .user.status = '1'LIMIT $out_set, 5";
+											FROM helper left join user on helper.helper_id = user.username WHERE .helper.status = '1'LIMIT $out_set, 5";
                             $result = mysqli_query($conn, $query);
                             if($result) {
                                 $count = $num_row = mysqli_num_rows($result);
