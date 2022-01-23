@@ -48,6 +48,7 @@ class _ListOrderDetailState extends State<ListOrderDetail> {
               ),
               if(widget.detail.ord_status == "1") Text("Pending"),
               if(widget.detail.ord_status == "2") Text("Ing"),
+              if(widget.detail.ord_status == "4")  Text("Done"),
               if(widget.detail.ord_status == "3") Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -63,7 +64,8 @@ class _ListOrderDetailState extends State<ListOrderDetail> {
                     ],
                   )
                 ],
-              )
+              ),
+              
             ],
           )
         ),

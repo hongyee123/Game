@@ -28,7 +28,7 @@ class _OrderDetailState extends State<OrderDetail> {
         backgroundColor: Colors.black,
         title: Text('Order Detail'),
       ),
-
+      backgroundColor: Colors.black,
       body: FutureBuilder<List<Detail>>(
         future: orderController.fetchOrderDetail(widget.user),
         builder: (context, snapshot) {

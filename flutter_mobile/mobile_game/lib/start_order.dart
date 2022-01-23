@@ -24,17 +24,20 @@ class _StartOrderState extends State<StartOrder> {
   Widget build(BuildContext context) {
     
     return Scaffold(
+      
       drawer: NavBar(user: widget.user, product: widget.product,),
+      
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('Start Order'),
       ),
-
+      backgroundColor: Colors.black,
       body: FutureBuilder<List<Product>>(
         future: productController.fetchProduct(widget.user),
         builder: (context, snapshot) {
           if (snapshot.hasData) { 
             return ListView.builder(
+              
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) => ListStartOrder(
                 product: snapshot.data![index],

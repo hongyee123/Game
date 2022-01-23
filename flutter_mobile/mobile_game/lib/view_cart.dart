@@ -10,6 +10,7 @@ import 'package:mobile_game/NavBar.dart';
 import 'package:mobile_game/place_order.dart';
 
 class ViewCart extends StatefulWidget {
+
   final User user;
   final Product product;
   const ViewCart({ Key? key, required this.user,required this.product}) : super(key: key);
@@ -78,6 +79,7 @@ class _ViewCartState extends State<ViewCart> {
         backgroundColor: Colors.black,
         title: Text('View Cart'),
       ),
+      backgroundColor: Colors.black,
       body: FutureBuilder<List<Cart>>(
         future:  futureCartList,
         builder: (context, snapshot) {
@@ -98,10 +100,10 @@ class _ViewCartState extends State<ViewCart> {
       floatingActionButton: ElevatedButton(
           style: ElevatedButton.styleFrom(
             minimumSize: Size(360, 60),
-            primary: Colors.black,
+            primary: Colors.red,
           ), 
           onPressed: () async {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PlaceOrder(user: widget.user, product:widget.product, subTotalItem: SubTotalItem, subTotalPrice: SubTotalPrice,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PlaceOrder(user: widget.user, product:widget.product, subTotalItem: SubTotalItem, subTotalPrice: SubTotalPrice)));
           },
           child: Text('Check Out'),
         ),

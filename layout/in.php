@@ -368,12 +368,7 @@
                                                 <ul class="menu-nav">
                                                     <li class="menu-item menu-item-<?php if($pageName == 'join_us') echo 'active';?>" aria-haspopup="true">
                                                         <a href="helper_register.php" class="menu-link">
-                                                            <span class="menu-text">Join Us</span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="menu-item menu-item" aria-haspopup="true">
-                                                        <a href="" class="menu-link">
-                                                            <span class="menu-text">b12313</span>
+                                                            <span class="menu-text">Request be a Helper</span>
                                                         </a>
                                                     </li>
                                                 </ul>

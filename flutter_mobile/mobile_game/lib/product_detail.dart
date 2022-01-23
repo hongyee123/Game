@@ -80,7 +80,9 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ],
       ),
+      backgroundColor: Colors.black,
       body: SafeArea(
+        
         child: Column(
           children: <Widget>[
             Card(
@@ -171,6 +173,7 @@ class _DetailPageState extends State<DetailPage> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -199,7 +202,7 @@ class _DetailPageState extends State<DetailPage> {
                 // child: child,
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(360, 60),
-                  primary: Colors.black,
+                  primary: Colors.red,
                 ), 
                 onPressed: () async {
                   var status = await productController.addCart(widget.user.username, widget.product.id, _counter);

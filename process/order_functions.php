@@ -14,41 +14,6 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['place']))) {
     $username = $_POST['username'];
     $ord_discount = $_POST['ord_discount'];
 
-	// $query = "SELECT credits FROM user WHERE username = '$username'";
-	// $result = mysqli_query($conn, $query);
-	// $row = mysqli_fetch_assoc($result);
-
-	// $product_price = $cart['price'] * $cart['cart_quantity'];
-	// $credits_after = $row['credits'] - $product_price;
-	// if($row['credits']>=$product_price){
-	// 	$query = "SELECT 
-	// 	cart.id AS cart_id,
-	// 	product_detail.id AS product_id,
-	// 	type,
-	// 	price,
-	// 	cart_quantity,
-	// 	product_detail.username AS helper_id
-	// 	FROM cart LEFT JOIN product_detail ON cart.cart_product = product_detail.id WHERE cart_username = '$username'";
-	// 	$cart_result = mysqli_query($conn, $query);
-	// 	if($result){
-	// 		$cart_num_row = mysqli_num_rows($cart_result);
-	// 		for ($i=0; $i < $cart_num_row; $i++) { 
-	// 			$cart = mysqli_fetch_assoc($cart_result);
-	// 			$cart_id = $cart['cart_id'];
-	// 			$cart_quantity = $cart['cart_quantity'];
-	// 			echo $cart_quantity;
-	// 		}
-	// 	}
-	// }
-	// =================== hee edit
-	// $sql = "SELECT * FROM cart WHERE cart_username = '$username'";
-	// $result = mysqli_query($conn, $sql);
-	// $row = mysqli_fetch_all($result);
-	// print_r($row);
-
-
-
-
     $sql = "SELECT id FROM order_detail";
     $check_row = mysqli_query($conn, $sql);
     $num_row = mysqli_num_rows($check_row);

@@ -40,9 +40,9 @@
                 <!--end::Svg Icon-->
             </span>
         </div>
-        <div id="kt_header_mobile" class="header-mobile bg-primary header-mobile-fixed">
+        <div id="kt_header_mobile" class="header-mobile header-mobile-fixed">
             <!--begin::Logo-->
-            <a href="index.html">
+            <a href="index.php">
                 <img alt="Logo" src="assets/media/logos/logo-letter-9.png" class="max-h-30px">
             </a>
             <!--end::Logo-->
@@ -83,7 +83,7 @@
                             <!--begin::Left-->
                             <div class="d-none d-lg-flex align-items-center mr-3">
                                 <!--begin::Logo-->
-                                <a href="index.html" class="mr-20">
+                                <a href="index.php" class="mr-20">
                                     <img alt="Logo" src="assets/media/logos/logo-letter-9.png" class="max-h-35px">
                                 </a>
                                 <!--end::Logo-->

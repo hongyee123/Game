@@ -13,35 +13,40 @@ class ListReview extends StatefulWidget {
 class _ListReviewState extends State<ListReview> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child:InkWell(
-        child:Padding(
-          padding: const EdgeInsets.only(top:32, bottom: 32, right: 16, left: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.order.user_id,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    widget.order.date,
-                  ),
-                ],
-              ),
-              Star(int.parse(widget.order.rate)),
-              Text(
-                widget.order.comment,
-              ),
-            ],
-          ) ,
-        ),
-        onTap: (){}
-      )
-    );
+    int rating = int.parse(widget.order.rate);
+    if(rating!=0){
+      return Card(
+        child:InkWell(
+          child:Padding(
+            padding: const EdgeInsets.only(top:32, bottom: 32, right: 16, left: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.order.user_id,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      widget.order.date,
+                    ),
+                  ],
+                ),
+                Star(int.parse(widget.order.rate)),
+                Text(
+                  widget.order.comment,
+                ),
+              ],
+            ) ,
+          ),
+          onTap: (){}
+        )
+      );
+    }else{
+      return Card();
+    }
   }
 
   Widget Star(int rate) {

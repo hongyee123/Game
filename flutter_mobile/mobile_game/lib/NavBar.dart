@@ -42,7 +42,7 @@ class _NavBarState extends State<NavBar> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(widget.user.username),
-            accountEmail: Text(widget.user.email),
+            accountEmail: Text("RM "+widget.user.credits),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
@@ -81,7 +81,7 @@ class _NavBarState extends State<NavBar> {
             leading: Icon(Icons.shopping_cart),
             title: Text('Cart'),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ViewCart(user: widget.user, product: widget.product,)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ViewCart(user: widget.user, product: widget.product)));
             },
           ),
           ListTile(

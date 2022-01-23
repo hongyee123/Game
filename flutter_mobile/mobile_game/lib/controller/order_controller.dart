@@ -40,4 +40,18 @@ class OrderController {
 
     return list;
   }
+
+  Future<int> placeOrder(User u) async {
+    dynamic response = await http.post(Uri.parse("http://192.168.0.190/Game/flutter_mobile/mobile_game/php_process/place_order.php"), 
+      body: {
+        'username': u.username
+      }
+    );
+
+    var order = json.decode(response.body);
+
+    int status;
+    status = order["status"];
+    return status;
+  }
 }

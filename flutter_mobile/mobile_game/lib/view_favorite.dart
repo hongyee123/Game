@@ -30,7 +30,7 @@ class _ViewFavoriteState extends State<ViewFavorite> {
         backgroundColor: Colors.black,
         title: Text('Favorite List'),
       ),
-
+      backgroundColor: Colors.black,
       body: FutureBuilder<List<Favorite>>(
         future: favoriteController.fetchFavorite(widget.user),
         builder: (context, snapshot) {

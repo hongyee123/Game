@@ -121,7 +121,7 @@
                                     <!--end::Item-->
                                     <!--begin::Item-->
                                     <li class="nav-item mr-3">
-                                        <a href="#" class="nav-link py-4 px-6 <?php if($pageTitle == 'recieve') echo 'active';?>" data-toggle="tab" data-target="#kt_header_tab_3" role="tab">Recieve Orders
+                                        <a href="#" class="nav-link py-4 px-6 <?php if($pageTitle == 'recieve') echo 'active';?>" data-toggle="tab" data-target="#kt_header_tab_3" role="tab">Helper's Orders
                                             <?php
                                                 $username = $_SESSION['helper_id'];
                                                 $query = "SELECT SUM(ord_quantity) AS total_order FROM order_detail WHERE ord_helper_id ='$username'AND ord_status = '1'";
@@ -294,7 +294,7 @@
                                     <!--end::Item-->
                                     <!--begin::Item-->
                                     <li class="nav-item mr-2">
-                                        <a href="#" class="nav-link btn btn-clean <?php if($pageTitle == 'recieve') echo 'active';?>" data-toggle="tab" data-target="#kt_header_tab_3" role="tab">Recieve Orders
+                                        <a href="#" class="nav-link btn btn-clean <?php if($pageTitle == 'recieve') echo 'active';?>" data-toggle="tab" data-target="#kt_header_tab_3" role="tab">Helper's Orders
                                         <?php
                                             $username = $_SESSION['helper_id'];
                                             $query = "SELECT SUM(ord_quantity) AS total_order FROM order_detail WHERE ord_helper_id ='$username'AND ord_status = '1'";
