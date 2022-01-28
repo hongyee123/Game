@@ -39,9 +39,12 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['place']))) {
 
 			$sql = "SELECT SUM(price * cart_quantity) AS total FROM product_detail LEFT JOIN cart ON product_detail.id = cart.cart_product WHERE cart_username = '$username'";
 			$result_credits = mysqli_query($conn, $sql);
-			$row_credits = mysqli_fetch_assoc($result);
+			$row_credits = mysqli_fetch_assoc($result_credits);
 			
 			$credits_after = $row['credits'] - $row_credits['total'];
+			$credits = $row['credits'];
+			$price = $row_credits['total'];
+
 			if($row['credits']>=$row_credits['total']){
 				for ($i=0; $i < $cart_num_row; $i++) { 
 					$cart = mysqli_fetch_assoc($cart_result);
@@ -61,9 +64,12 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['place']))) {
 								('$order_id','$product_id', '$username',  '$seller_id', '$product_name', '$product_quantity', '$product_price', '$ord_discount', '1')";
 						$query2 = "DELETE FROM cart WHERE id = $cart_id";
 						$query3 = "INSERT INTO transaction_history(username,order_id, amount,transaction_date,status) VALUES ('$username','$order_id', '$product_price', NOW(),'2')";
+						$query4 = "UPDATE `user` SET `credits`= '$credits_after' WHERE username = '$username'";
+				
 						$result1 = mysqli_query($conn, $query1);
 						$result2 = mysqli_query($conn, $query2);
 						$result3 = mysqli_query($conn, $query3);
+						$result4 = mysqli_query($conn, $query4);
 						$order_id ++;
 						if($result1 && $result2 && $result3){
 							continue;
@@ -76,16 +82,14 @@ $_SERVER['REQUEST_METHOD'] == "POST" && (isset($_POST['place']))) {
 						}
 					
 				}
-				$query4 = "UPDATE `user` SET `credits`= '$credits_after' WHERE username = '$username'";
-				$result4 = mysqli_query($conn, $query4);
+				$output['status'] = 0;
+				$output['msg'] = 'Order Placed Successfully';
+				
 			}else{
 				$output['status'] = 2;
 				$output['msg'] = 'Credits No Enough !';
 			}
 			mysqli_close($conn);
-
-			$output['status'] = 0;
-			$output['msg'] = 'Order Placed Successfully';
 			echo json_encode($output);
 	}
 }
